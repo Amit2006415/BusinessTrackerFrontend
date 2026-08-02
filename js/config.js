@@ -1,1 +1,1 @@
-const API_BASE_URL = "https://business-tracker-backend-d7gt.onrender.com/api";
+window.API_BASE_URL = "https://business-tracker-backend-d7gt.onrender.com/api";
