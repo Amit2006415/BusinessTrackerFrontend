@@ -36,13 +36,13 @@ function displayCustomers(customerList) {
 
     let table = "";
 
-    customerList.forEach(customer => {
+    customerList.forEach((customer, index) => {
 
         table += `
 
 <tr>
 
-<td>${customer.id}</td>
+<td>${index + 1}</td>
 
 <td>${customer.customerName}</td>
 
