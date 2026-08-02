@@ -36,13 +36,13 @@ function displayExpenses(expenseList) {
 
     let table = "";
 
-    expenseList.forEach(expense => {
+    expenseList.forEach((expense, index) => {
 
         table += `
 
 <tr>
 
-<td>${expense.id}</td>
+<td>${index + 1}</td>
 
 <td>${expense.expenseName}</td>
 

@@ -59,13 +59,13 @@ function loadCustomers() {
 
         let table = "";
 
-        customers.forEach(customer => {
+        customers.forEach((customer, index) => {
 
             table += `
 
 <tr>
 
-<td>${customer.id}</td>
+<td>${index + 1}</td>
 
 <td>${customer.customerName}</td>
 
