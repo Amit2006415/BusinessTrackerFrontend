@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Customer | Business Tracker</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/add-customer.css">
+
+</head>
+
+<body>
+
+    <div class="container mt-5">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-warning text-dark">
+
+                <h3>
+                    <i class="bi bi-pencil-square"></i> Edit Customer
+                </h3>
+
+            </div>
+
+            <div class="card-body">
+
+                <form id="editCustomerForm">
+
+                    <input type="hidden" id="customerId">
+
+                    <div class="mb-3">
+                        <label class="form-label">Customer Name</label>
+                        <input type="text" id="customerName" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Work Date</label>
+                        <input type="date" id="workDate" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Product</label>
+                        <input type="text" id="product" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Total Amount</label>
+                        <input type="number" id="totalAmount" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Advance Payment</label>
+                        <input type="number" id="advancePayment" class="form-control" required>
+                    </div>
+
+                    <button class="btn btn-warning" type="submit">
+                    <i class="bi bi-check-circle"></i>
+                    Update Customer
+                </button>
+
+                    <a href="customers.html" class="btn btn-secondary">
+                    Back
+                </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="toast-container">
+
+        <div id="appToast" class="toast align-items-center text-bg-success border-0">
+
+            <div class="d-flex">
+
+                <div class="toast-body" id="toastMessage">
+
+                    Success
+
+                </div>
+
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
+            </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/edit-customer.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
