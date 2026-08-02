@@ -27,7 +27,6 @@
     <div class="wrapper">
 
         <!-- Sidebar -->
-
         <aside class="sidebar">
 
             <div class="logo">
@@ -71,7 +70,6 @@
         </aside>
 
         <!-- Main Content -->
-
         <main class="content">
 
             <div class="topbar">
@@ -79,9 +77,9 @@
                 <h2>Business Reports</h2>
 
                 <button class="btn btn-success" onclick="window.print()">
-                <i class="bi bi-printer-fill"></i>
-                Print Report
-            </button>
+                    <i class="bi bi-printer-fill"></i>
+                    Print Report
+                </button>
 
             </div>
 
@@ -140,6 +138,8 @@
         </main>
 
     </div>
+
+    <!-- Toast -->
     <div class="toast-container">
 
         <div id="appToast" class="toast align-items-center text-bg-success border-0">
@@ -147,13 +147,11 @@
             <div class="d-flex">
 
                 <div class="toast-body" id="toastMessage">
-
                     Success
-
                 </div>
 
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
-            </button>
+                </button>
 
             </div>
 
@@ -161,9 +159,16 @@
 
     </div>
 
-    <script src="js/report.js"></script>
+    <!-- Load Config First -->
     <script src="js/config.js"></script>
+
+    <!-- Common Functions -->
     <script src="js/common.js"></script>
+
+    <!-- Report Logic -->
+    <script src="js/report.js"></script>
+
+    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
