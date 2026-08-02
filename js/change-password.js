@@ -29,7 +29,7 @@ form.addEventListener("submit", function(e) {
 
     }
 
-    fetch("http://localhost:8080/api/admin/change-password", {
+    fetch("https://business-tracker-backend-d7gt.onrender.com/api/admin/change-password", {
 
         method: "PUT",
 

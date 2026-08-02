@@ -11,7 +11,7 @@ const expenseId = params.get("id");
 
 function loadExpense() {
 
-    fetch("http://localhost:8080/api/expenses/" + expenseId)
+    fetch("https://business-tracker-backend-d7gt.onrender.com/api/expenses/" + expenseId)
 
     .then(response => response.json())
 
@@ -57,7 +57,7 @@ document.getElementById("expenseForm")
 
         };
 
-        fetch("http://localhost:8080/api/expenses/" + expenseId, {
+        fetch("https://business-tracker-backend-d7gt.onrender.com/api/expenses/" + expenseId, {
 
             method: "PUT",
 
