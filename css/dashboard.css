@@ -36,7 +36,8 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    transition: 0.3s;
+    z-index: 9999;
 }
 
 .logo {
@@ -85,6 +86,7 @@ body {
     width: calc(100% - 250px);
     margin-left: 250px;
     padding: 30px;
+    transition: .3s;
 }
 
 
@@ -107,6 +109,10 @@ body {
     margin: 0;
     font-size: 28px;
     font-weight: 700;
+}
+
+#menuBtn {
+    font-size: 24px;
 }
 
 #languageSelect {
@@ -184,16 +190,34 @@ body {
 
 
 /* ==========================================
+   Desktop
+========================================== */
+
+@media(min-width:993px) {
+    .sidebar {
+        left: 0;
+    }
+    .content {
+        margin-left: 250px;
+    }
+}
+
+
+/* ==========================================
    Mobile
 ========================================== */
 
 @media(max-width:992px) {
     .sidebar {
-        width: 220px;
+        left: -250px;
+        width: 250px;
+    }
+    .sidebar.show {
+        left: 0;
     }
     .content {
-        margin-left: 220px;
-        width: calc(100% - 220px);
+        width: 100%;
+        margin-left: 0;
         padding: 20px;
     }
     .topbar {
