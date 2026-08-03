@@ -14,7 +14,15 @@ function loadIncome() {
 
     fetch(API_BASE_URL + "/income/total")
 
-    .then(response => response.json())
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Failed to load income");
+        }
+
+        return response.json();
+
+    })
 
     .then(data => {
 
@@ -24,7 +32,7 @@ function loadIncome() {
 
     .catch(error => {
 
-        console.error("Income Error :", error);
+        console.error(error);
 
         showToast("Unable to load Income", "error");
 
@@ -40,7 +48,15 @@ function loadExpense() {
 
     fetch(API_BASE_URL + "/expenses/total")
 
-    .then(response => response.json())
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Failed to load expense");
+        }
+
+        return response.json();
+
+    })
 
     .then(data => {
 
@@ -50,7 +66,7 @@ function loadExpense() {
 
     .catch(error => {
 
-        console.error("Expense Error :", error);
+        console.error(error);
 
         showToast("Unable to load Expense", "error");
 
@@ -66,7 +82,15 @@ function loadProfit() {
 
     fetch(API_BASE_URL + "/profit/total")
 
-    .then(response => response.json())
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Failed to load profit");
+        }
+
+        return response.json();
+
+    })
 
     .then(data => {
 
@@ -76,7 +100,7 @@ function loadProfit() {
 
     .catch(error => {
 
-        console.error("Profit Error :", error);
+        console.error(error);
 
         showToast("Unable to load Profit", "error");
 
@@ -88,6 +112,10 @@ function loadProfit() {
 // Load Reports
 // ==========================================
 
-loadIncome();
-loadExpense();
-loadProfit();
+document.addEventListener("DOMContentLoaded", function() {
+
+    loadIncome();
+    loadExpense();
+    loadProfit();
+
+});

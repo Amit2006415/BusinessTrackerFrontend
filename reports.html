@@ -37,31 +37,36 @@
 
                 <li>
                     <a href="dashboard.html">
-                        <i class="bi bi-speedometer2"></i> Dashboard
+                        <i class="bi bi-speedometer2"></i>
+                        <span data-lang="dashboard">Dashboard</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="customers.html">
-                        <i class="bi bi-people-fill"></i> Customers
+                        <i class="bi bi-people-fill"></i>
+                        <span data-lang="customers">Customers</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="expenses.html">
-                        <i class="bi bi-wallet2"></i> Expenses
+                        <i class="bi bi-wallet2"></i>
+                        <span data-lang="expenses">Expenses</span>
                     </a>
                 </li>
 
                 <li class="active">
                     <a href="reports.html">
-                        <i class="bi bi-bar-chart-fill"></i> Reports
+                        <i class="bi bi-bar-chart-fill"></i>
+                        <span data-lang="reports">Reports</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="index.html">
-                        <i class="bi bi-box-arrow-right"></i> Logout
+                    <a href="#" onclick="logout()">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span data-lang="logout">Logout</span>
                     </a>
                 </li>
 
@@ -81,7 +86,7 @@
             <i class="bi bi-list"></i>
         </button>
 
-                    <h2 class="mb-0" id="pageTitle">
+                    <h2 class="mb-0" data-lang="businessReports">
                         Business Reports
                     </h2>
 
@@ -99,9 +104,11 @@
 
                     <button class="btn btn-success" onclick="window.print()">
 
-            <i class="bi bi-printer-fill"></i>
+           <i class="bi bi-printer-fill"></i>
 
-            Print Report
+<span data-lang="printReport">
+    Print Report
+</span>
 
         </button>
 
@@ -117,7 +124,9 @@
 
                         <div class="card-body">
 
-                            <h5>Total Income</h5>
+                            <h5 data-lang="totalIncome">
+                                Total Income
+                            </h5>
 
                             <h2 id="income">₹0</h2>
 
@@ -133,7 +142,9 @@
 
                         <div class="card-body">
 
-                            <h5>Total Expense</h5>
+                            <h5 data-lang="totalExpense">
+                                Total Expense
+                            </h5>
 
                             <h2 id="expense">₹0</h2>
 
@@ -149,7 +160,9 @@
 
                         <div class="card-body">
 
-                            <h5>Total Profit</h5>
+                            <h5 data-lang="totalProfit">
+                                Total Profit
+                            </h5>
 
                             <h2 id="profit">₹0</h2>
 
@@ -188,15 +201,12 @@
     <!-- Load Config First -->
     <script src="js/config.js"></script>
 
-    <!-- Common Functions -->
     <script src="js/common.js"></script>
 
-    <!-- Report Logic -->
+    <script src="js/language.js"></script>
+
     <script src="js/report.js"></script>
 
-    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
 
 </html>
