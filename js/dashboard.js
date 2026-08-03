@@ -98,26 +98,6 @@ function loadCustomers() {
 }
 
 // ==========================================
-// Sidebar Toggle
-// ==========================================
-
-const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.querySelector(".sidebar");
-const content = document.querySelector(".content");
-
-if (menuBtn) {
-
-    menuBtn.addEventListener("click", () => {
-
-        sidebar.classList.toggle("show");
-        sidebar.classList.toggle("close");
-        content.classList.toggle("full");
-
-    });
-
-}
-
-// ==========================================
 // Load Dashboard
 // ==========================================
 
