@@ -1,4 +1,6 @@
-/* ---------- Global ---------- */
+/* ==========================================
+   Global
+========================================== */
 
 * {
     margin: 0;
@@ -13,14 +15,18 @@ body {
 }
 
 
-/* ---------- Layout ---------- */
+/* ==========================================
+   Layout
+========================================== */
 
 .wrapper {
     display: flex;
 }
 
 
-/* ---------- Sidebar ---------- */
+/* ==========================================
+   Sidebar
+========================================== */
 
 .sidebar {
     width: 250px;
@@ -30,7 +36,6 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    transition: 0.3s ease;
     z-index: 999;
 }
 
@@ -41,7 +46,7 @@ body {
 }
 
 .logo h2 {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 700;
 }
 
@@ -55,15 +60,15 @@ body {
 }
 
 .sidebar ul li a {
-    color: #fff;
-    text-decoration: none;
     display: block;
     padding: 14px 25px;
+    color: #fff;
+    text-decoration: none;
     transition: .3s;
 }
 
-.sidebar ul li a:hover,
-.sidebar ul li.active a {
+.sidebar ul li.active a,
+.sidebar ul li a:hover {
     background: #084298;
 }
 
@@ -72,27 +77,26 @@ body {
 }
 
 
-/* ---------- Content ---------- */
+/* ==========================================
+   Main Content
+========================================== */
 
 .content {
-    width: 100%;
+    width: calc(100% - 250px);
     margin-left: 250px;
     padding: 30px;
-    transition: .3s;
-}
-
-.content.full {
-    margin-left: 0;
 }
 
 
-/* ---------- Topbar ---------- */
+/* ==========================================
+   Topbar
+========================================== */
 
 .topbar {
     background: #0d6efd;
     color: #fff;
     padding: 15px 20px;
-    border-radius: 10px;
+    border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -105,22 +109,20 @@ body {
     font-weight: 700;
 }
 
-#menuBtn {
-    font-size: 25px;
-}
-
 #languageSelect {
-    width: 150px;
+    width: 160px;
 }
 
 
-/* ---------- Cards ---------- */
+/* ==========================================
+   Dashboard Cards
+========================================== */
 
 .dashboard-card {
-    color: #fff;
     border: none;
     border-radius: 18px;
     padding: 25px;
+    color: #fff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
 }
 
@@ -159,7 +161,9 @@ body {
 }
 
 
-/* ---------- Table ---------- */
+/* ==========================================
+   Table
+========================================== */
 
 .table-card {
     border: none;
@@ -179,23 +183,27 @@ body {
 }
 
 
-/* ---------- Mobile ---------- */
+/* ==========================================
+   Mobile
+========================================== */
 
-@media (max-width:992px) {
+@media(max-width:992px) {
     .sidebar {
-        position: fixed;
-        top: 0;
-        left: -250px;
-        width: 250px;
-        height: 100vh;
-        background: #0d6efd;
-        transition: 0.3s ease;
-        z-index: 9999;
-    }
-    .sidebar.show {
-        left: 0;
+        width: 220px;
     }
     .content {
-        margin-left: 0 !important;
+        margin-left: 220px;
+        width: calc(100% - 220px);
+        padding: 20px;
+    }
+    .topbar {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .topbar h2 {
+        font-size: 22px;
+    }
+    #languageSelect {
+        width: 130px;
     }
 }
