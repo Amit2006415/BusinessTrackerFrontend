@@ -28,14 +28,10 @@ body {
     background: #0d6efd;
     color: #fff;
     position: fixed;
-    left: 0;
     top: 0;
-    transition: 0.3s;
+    left: 0;
+    transition: 0.3s ease;
     z-index: 999;
-}
-
-.sidebar.close {
-    left: -250px;
 }
 
 .logo {
@@ -185,15 +181,25 @@ body {
 
 /* ---------- Mobile ---------- */
 
-@media(max-width:992px) {
+@media (max-width:992px) {
     .sidebar {
+        position: fixed;
+        top: 0;
         left: -250px;
+        width: 250px;
+        height: 100vh;
+        background: #0d6efd;
+        transition: .3s ease;
+        z-index: 9999;
     }
     .sidebar.show {
         left: 0;
     }
     .content {
         margin-left: 0;
+        padding: 15px;
+    }
+    .topbar {
         padding: 15px;
     }
     .topbar h2 {

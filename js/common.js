@@ -18,21 +18,14 @@ function showToast(message, type = "success") {
     );
 
     if (type === "success") {
-
         toast.classList.add("text-bg-success");
-
     } else if (type === "error") {
-
         toast.classList.add("text-bg-danger");
-
     } else {
-
         toast.classList.add("text-bg-warning");
-
     }
 
     const bsToast = new bootstrap.Toast(toast);
-
     bsToast.show();
 
 }
@@ -48,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (!menuBtn || !sidebar) return;
 
-    // Open / Close Sidebar
+    // Toggle Sidebar
     menuBtn.addEventListener("click", function(e) {
 
         e.stopPropagation();
@@ -57,25 +50,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
-    // Close Sidebar when clicking outside
+    // Close when clicking outside
     document.addEventListener("click", function(e) {
 
         if (
-            sidebar.classList.contains("active") &&
+            sidebar.classList.contains("show") &&
             !sidebar.contains(e.target) &&
             !menuBtn.contains(e.target)
         ) {
 
-            sidebar.classList.contains("show")
+            sidebar.classList.remove("show");
 
         }
 
     });
 
-    // Close Sidebar when any menu item is clicked
-    const links = sidebar.querySelectorAll("a");
-
-    links.forEach(function(link) {
+    // Close when menu item clicked
+    sidebar.querySelectorAll("a").forEach(function(link) {
 
         link.addEventListener("click", function() {
 
