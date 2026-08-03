@@ -39,7 +39,8 @@ function loadDashboard() {
 
     .catch(error => {
 
-        console.log(error);
+        console.error(error);
+        showToast("Unable to load dashboard", "error");
 
     });
 
@@ -62,25 +63,15 @@ function loadCustomers() {
         customers.forEach((customer, index) => {
 
             table += `
-
 <tr>
-
-<td>${index + 1}</td>
-
-<td>${customer.customerName}</td>
-
-<td>${customer.product}</td>
-
-<td>₹ ${customer.totalAmount}</td>
-
-<td>₹ ${customer.advancePayment}</td>
-
-<td>₹ ${customer.dueAmount}</td>
-
-<td>${customer.paymentStatus}</td>
-
+    <td>${index + 1}</td>
+    <td>${customer.customerName}</td>
+    <td>${customer.product}</td>
+    <td>₹ ${customer.totalAmount}</td>
+    <td>₹ ${customer.advancePayment}</td>
+    <td>₹ ${customer.dueAmount}</td>
+    <td>${customer.paymentStatus}</td>
 </tr>
-
 `;
 
         });
@@ -91,18 +82,12 @@ function loadCustomers() {
 
     .catch(error => {
 
-        console.log(error);
+        console.error(error);
+        showToast("Unable to load customers", "error");
 
     });
 
 }
-
-// ==========================================
-// Load Dashboard
-// ==========================================
-
-loadDashboard();
-loadCustomers();
 
 // ==========================================
 // Logout
@@ -114,9 +99,21 @@ function logout() {
 
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("adminEmail");
+        localStorage.removeItem("language");
 
         window.location.href = "index.html";
 
     }
 
 }
+
+// ==========================================
+// Initialize Dashboard
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    loadDashboard();
+    loadCustomers();
+
+});
