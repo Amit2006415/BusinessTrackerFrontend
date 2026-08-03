@@ -1,14 +1,13 @@
-// ===========================================
-// Toast Message
-// ===========================================
+// ==========================================
+// Toast Notification
+// ==========================================
 
 function showToast(message, type = "success") {
 
     const toast = document.getElementById("appToast");
-
-    if (!toast) return;
-
     const toastMessage = document.getElementById("toastMessage");
+
+    if (!toast || !toastMessage) return;
 
     toastMessage.innerHTML = message;
 
@@ -38,46 +37,52 @@ function showToast(message, type = "success") {
 
 }
 
-// ===========================================
-// Sidebar Toggle
-// ===========================================
+// ==========================================
+// Responsive Sidebar
+// ==========================================
 
 document.addEventListener("DOMContentLoaded", function() {
 
     const menuBtn = document.getElementById("menuBtn");
     const sidebar = document.querySelector(".sidebar");
-    const content = document.querySelector(".content");
 
-    if (menuBtn && sidebar) {
+    if (!menuBtn || !sidebar) return;
 
-        menuBtn.addEventListener("click", function() {
+    // Open / Close Sidebar
+    menuBtn.addEventListener("click", function(e) {
 
-            sidebar.classList.toggle("show");
-            sidebar.classList.toggle("close");
+        e.stopPropagation();
 
-            if (content) {
-                content.classList.toggle("full");
-            }
+        sidebar.classList.toggle("active");
+
+    });
+
+    // Close Sidebar when clicking outside
+    document.addEventListener("click", function(e) {
+
+        if (
+            sidebar.classList.contains("active") &&
+            !sidebar.contains(e.target) &&
+            !menuBtn.contains(e.target)
+        ) {
+
+            sidebar.classList.remove("active");
+
+        }
+
+    });
+
+    // Close Sidebar when any menu item is clicked
+    const links = sidebar.querySelectorAll("a");
+
+    links.forEach(function(link) {
+
+        link.addEventListener("click", function() {
+
+            sidebar.classList.remove("active");
 
         });
 
-        // Close sidebar when clicking outside (Mobile)
-
-        document.addEventListener("click", function(e) {
-
-            if (
-                window.innerWidth <= 992 &&
-                sidebar.classList.contains("show") &&
-                !sidebar.contains(e.target) &&
-                !menuBtn.contains(e.target)
-            ) {
-
-                sidebar.classList.remove("show");
-
-            }
-
-        });
-
-    }
+    });
 
 });

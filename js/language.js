@@ -1,7 +1,6 @@
 const translations = {
 
     en: {
-
         dashboard: "Dashboard",
         customers: "Customers",
         expenses: "Expenses",
@@ -25,11 +24,9 @@ const translations = {
         advance: "Advance",
         due: "Due",
         status: "Status"
-
     },
 
     mr: {
-
         dashboard: "डॅशबोर्ड",
         customers: "ग्राहक",
         expenses: "खर्च",
@@ -53,7 +50,40 @@ const translations = {
         advance: "आगाऊ",
         due: "बाकी",
         status: "स्थिती"
-
     }
 
 };
+
+function changeLanguage(lang) {
+
+    localStorage.setItem("language", lang);
+
+    document.querySelectorAll("[data-lang]").forEach(item => {
+
+        const key = item.getAttribute("data-lang");
+
+        if (translations[lang][key]) {
+            item.innerHTML = translations[lang][key];
+        }
+
+    });
+
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const languageSelect = document.getElementById("languageSelect");
+
+    const savedLanguage = localStorage.getItem("language") || "en";
+
+    if (languageSelect) {
+        languageSelect.value = savedLanguage;
+
+        languageSelect.addEventListener("change", function() {
+            changeLanguage(this.value);
+        });
+    }
+
+    changeLanguage(savedLanguage);
+
+});
