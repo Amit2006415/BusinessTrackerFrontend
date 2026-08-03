@@ -6,9 +6,9 @@ if (localStorage.getItem("isLoggedIn") !== "true") {
     window.location.href = "index.html";
 }
 
-// ------------------------------
+// ==========================================
 // Load Dashboard Summary
-// ------------------------------
+// ==========================================
 
 function loadDashboard() {
 
@@ -45,9 +45,9 @@ function loadDashboard() {
 
 }
 
-// ------------------------------
+// ==========================================
 // Load Customer Table
-// ------------------------------
+// ==========================================
 
 function loadCustomers() {
 
@@ -97,51 +97,36 @@ function loadCustomers() {
 
 }
 
-// ------------------------------
-// Load Everything
-// ------------------------------
+// ==========================================
+// Sidebar Toggle
+// ==========================================
 
-loadDashboard();
-loadCustomers();
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.querySelector(".sidebar");
+const content = document.querySelector(".content");
 
-// =========================
-// Dark Mode
-// =========================
+if (menuBtn) {
 
-const toggleBtn = document.getElementById("themeToggle");
+    menuBtn.addEventListener("click", () => {
 
-if (toggleBtn) {
-
-    if (localStorage.getItem("theme") === "dark") {
-
-        document.body.classList.add("dark-mode");
-        toggleBtn.innerHTML = "☀️";
-
-    }
-
-    toggleBtn.addEventListener("click", () => {
-
-        document.body.classList.toggle("dark-mode");
-
-        if (document.body.classList.contains("dark-mode")) {
-
-            localStorage.setItem("theme", "dark");
-            toggleBtn.innerHTML = "☀️";
-
-        } else {
-
-            localStorage.setItem("theme", "light");
-            toggleBtn.innerHTML = "🌙";
-
-        }
+        sidebar.classList.toggle("show");
+        sidebar.classList.toggle("close");
+        content.classList.toggle("full");
 
     });
 
 }
 
-// =========================
+// ==========================================
+// Load Dashboard
+// ==========================================
+
+loadDashboard();
+loadCustomers();
+
+// ==========================================
 // Logout
-// =========================
+// ==========================================
 
 function logout() {
 

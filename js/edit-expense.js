@@ -1,19 +1,35 @@
-// ====================================
-// Get Expense ID From URL
-// ====================================
+// ==========================================
+// Check Login
+// ==========================================
+
+if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html";
+}
+
+// ==========================================
+// Get Expense ID
+// ==========================================
 
 const params = new URLSearchParams(window.location.search);
 const expenseId = params.get("id");
 
-// ====================================
-// Load Expense Details
-// ====================================
+// ==========================================
+// Load Expense
+// ==========================================
 
 function loadExpense() {
 
-    fetch("https://business-tracker-backend-d7gt.onrender.com/api/expenses/" + expenseId)
+    fetch(API_BASE_URL + "/expenses/" + expenseId)
 
-    .then(response => response.json())
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Expense Not Found");
+        }
+
+        return response.json();
+
+    })
 
     .then(expense => {
 
@@ -28,81 +44,109 @@ function loadExpense() {
     .catch(error => {
 
         console.error(error);
-        alert("Failed to load expense.");
+
+        showToast("Unable to load expense", "error");
 
     });
 
 }
 
-// ====================================
+// ==========================================
 // Update Expense
-// ====================================
+// ==========================================
 
-document.getElementById("expenseForm")
-    .addEventListener("submit", function(e) {
+const expenseForm = document.getElementById("expenseForm");
 
-        e.preventDefault();
+expenseForm.addEventListener("submit", function(e) {
 
-        const expense = {
+    e.preventDefault();
 
-            id: expenseId,
+    const expenseName = document.getElementById("expenseName").value.trim();
+    const expenseDate = document.getElementById("expenseDate").value;
+    const amount = parseFloat(document.getElementById("amount").value);
+    const description = document.getElementById("description").value.trim();
 
-            expenseName: document.getElementById("expenseName").value,
+    // ==========================
+    // Validation
+    // ==========================
 
-            expenseDate: document.getElementById("expenseDate").value,
+    if (expenseName === "") {
 
-            amount: parseFloat(document.getElementById("amount").value),
+        showToast("Please enter Expense Name", "warning");
+        return;
 
-            description: document.getElementById("description").value
+    }
 
-        };
+    if (expenseDate === "") {
 
-        fetch("https://business-tracker-backend-d7gt.onrender.com/api/expenses/" + expenseId, {
+        showToast("Please select Expense Date", "warning");
+        return;
 
-            method: "PUT",
+    }
 
-            headers: {
+    if (isNaN(amount) || amount <= 0) {
 
-                "Content-Type": "application/json"
+        showToast("Please enter a valid Amount", "warning");
+        return;
 
-            },
+    }
 
-            body: JSON.stringify(expense)
+    const expense = {
 
-        })
+        id: expenseId,
+        expenseName: expenseName,
+        expenseDate: expenseDate,
+        amount: amount,
+        description: description
 
-        .then(response => {
+    };
 
-            if (!response.ok) {
+    fetch(API_BASE_URL + "/expenses/" + expenseId, {
 
-                throw new Error("Update Failed");
+        method: "PUT",
 
-            }
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-            return response.json();
+        body: JSON.stringify(expense)
 
-        })
+    })
 
-        .then(data => {
+    .then(response => {
 
-            alert("✅ Expense Updated Successfully");
+        if (!response.ok) {
+            throw new Error("Update Failed");
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        showToast("Expense Updated Successfully", "success");
+
+        setTimeout(() => {
 
             window.location.href = "expenses.html";
 
-        })
+        }, 1000);
 
-        .catch(error => {
+    })
 
-            console.error(error);
+    .catch(error => {
 
-            alert("❌ Unable to Update Expense");
+        console.error(error);
 
-        });
+        showToast("Unable to update expense", "error");
 
     });
 
-// ====================================
+});
+
+// ==========================================
 // Start
-// ====================================
+// ==========================================
 
 loadExpense();

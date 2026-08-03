@@ -74,14 +74,38 @@
 
             <div class="topbar">
 
-                <h2>Customers</h2>
+                <!-- Left -->
+                <div class="d-flex align-items-center">
 
-                <button class="btn btn-primary" onclick="window.location='add-customer.html'">
+                    <button class="btn btn-primary me-3" id="menuBtn">
+            <i class="bi bi-list"></i>
+        </button>
 
-                    <i class="bi bi-plus-circle"></i>
-                    Add Customer
+                    <h2 class="mb-0" id="pageTitle">
+                        Customers
+                    </h2>
 
-                </button>
+                </div>
+
+                <!-- Right -->
+                <div class="d-flex align-items-center">
+
+                    <select id="languageSelect" class="form-select me-3" style="width:150px;">
+
+            <option value="en">English</option>
+            <option value="mr">मराठी</option>
+
+        </select>
+
+                    <button class="btn btn-primary" onclick="window.location='add-customer.html'">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Customer
+
+        </button>
+
+                </div>
 
             </div>
 

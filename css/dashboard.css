@@ -9,6 +9,7 @@
 
 body {
     background: #f4f7fb;
+    overflow-x: hidden;
 }
 
 
@@ -23,12 +24,18 @@ body {
 
 .sidebar {
     width: 250px;
-    min-height: 100vh;
+    height: 100vh;
     background: #0d6efd;
     color: #fff;
     position: fixed;
     left: 0;
     top: 0;
+    transition: 0.3s;
+    z-index: 999;
+}
+
+.sidebar.close {
+    left: -250px;
 }
 
 .logo {
@@ -72,40 +79,49 @@ body {
 /* ---------- Content ---------- */
 
 .content {
-    margin-left: 250px;
     width: 100%;
+    margin-left: 250px;
     padding: 30px;
+    transition: .3s;
+}
+
+.content.full {
+    margin-left: 0;
 }
 
 
 /* ---------- Topbar ---------- */
 
 .topbar {
+    background: #0d6efd;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 .topbar h2 {
+    margin: 0;
+    font-size: 28px;
     font-weight: 700;
 }
 
-.admin {
-    font-size: 18px;
+#menuBtn {
+    font-size: 25px;
 }
 
-.admin i {
-    font-size: 28px;
-    color: #0d6efd;
-    margin-right: 8px;
+#languageSelect {
+    width: 150px;
 }
 
 
 /* ---------- Cards ---------- */
 
 .dashboard-card {
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 18px;
     padding: 25px;
@@ -121,9 +137,6 @@ body {
     font-size: 34px;
     font-weight: 700;
 }
-
-
-/* Different Colors */
 
 .customers {
     background: #0d6efd;
@@ -161,7 +174,7 @@ body {
 
 .card-header {
     background: #0d6efd;
-    color: white;
+    color: #fff;
     padding: 18px;
 }
 
@@ -170,18 +183,20 @@ body {
 }
 
 
-/* ---------- Responsive ---------- */
+/* ---------- Mobile ---------- */
 
 @media(max-width:992px) {
     .sidebar {
-        width: 100%;
-        position: relative;
-        min-height: auto;
+        left: -250px;
+    }
+    .sidebar.show {
+        left: 0;
     }
     .content {
         margin-left: 0;
+        padding: 15px;
     }
-    .wrapper {
-        flex-direction: column;
+    .topbar h2 {
+        font-size: 22px;
     }
 }

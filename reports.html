@@ -74,12 +74,38 @@
 
             <div class="topbar">
 
-                <h2>Business Reports</h2>
+                <!-- Left -->
+                <div class="d-flex align-items-center">
 
-                <button class="btn btn-success" onclick="window.print()">
-                    <i class="bi bi-printer-fill"></i>
-                    Print Report
-                </button>
+                    <button class="btn btn-primary me-3" id="menuBtn">
+            <i class="bi bi-list"></i>
+        </button>
+
+                    <h2 class="mb-0" id="pageTitle">
+                        Business Reports
+                    </h2>
+
+                </div>
+
+                <!-- Right -->
+                <div class="d-flex align-items-center">
+
+                    <select id="languageSelect" class="form-select me-3" style="width:150px;">
+
+            <option value="en">English</option>
+            <option value="mr">मराठी</option>
+
+        </select>
+
+                    <button class="btn btn-success" onclick="window.print()">
+
+            <i class="bi bi-printer-fill"></i>
+
+            Print Report
+
+        </button>
+
+                </div>
 
             </div>
 

@@ -1,6 +1,13 @@
+// ===========================================
+// Toast Message
+// ===========================================
+
 function showToast(message, type = "success") {
 
     const toast = document.getElementById("appToast");
+
+    if (!toast) return;
+
     const toastMessage = document.getElementById("toastMessage");
 
     toastMessage.innerHTML = message;
@@ -31,33 +38,45 @@ function showToast(message, type = "success") {
 
 }
 
-// ===========================
-// Responsive Sidebar
-// ===========================
+// ===========================================
+// Sidebar Toggle
+// ===========================================
 
-const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.querySelector(".sidebar");
+document.addEventListener("DOMContentLoaded", function() {
 
-if (menuBtn && sidebar) {
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.querySelector(".sidebar");
+    const content = document.querySelector(".content");
 
-    menuBtn.addEventListener("click", function() {
+    if (menuBtn && sidebar) {
 
-        sidebar.classList.toggle("active");
+        menuBtn.addEventListener("click", function() {
 
-    });
+            sidebar.classList.toggle("show");
+            sidebar.classList.toggle("close");
 
-}
+            if (content) {
+                content.classList.toggle("full");
+            }
 
-document.addEventListener("click", function(e) {
+        });
 
-    if (
-        sidebar &&
-        sidebar.classList.contains("active") &&
-        !sidebar.contains(e.target) &&
-        !menuBtn.contains(e.target)
-    ) {
+        // Close sidebar when clicking outside (Mobile)
 
-        sidebar.classList.remove("active");
+        document.addEventListener("click", function(e) {
+
+            if (
+                window.innerWidth <= 992 &&
+                sidebar.classList.contains("show") &&
+                !sidebar.contains(e.target) &&
+                !menuBtn.contains(e.target)
+            ) {
+
+                sidebar.classList.remove("show");
+
+            }
+
+        });
 
     }
 

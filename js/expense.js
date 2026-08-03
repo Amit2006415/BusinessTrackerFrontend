@@ -1,4 +1,12 @@
 // =======================================
+// Check Login
+// =======================================
+
+if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html";
+}
+
+// =======================================
 // Load All Expenses
 // =======================================
 
@@ -22,7 +30,7 @@ function loadExpenses() {
 
         console.error(error);
 
-        alert("Unable to connect to Spring Boot Server");
+        showToast("Unable to connect to Spring Boot Server", "error");
 
     });
 
@@ -59,7 +67,6 @@ class="btn btn-warning btn-sm"
 onclick="editExpense(${expense.id})">
 
 <i class="bi bi-pencil-square"></i>
-
 Edit
 
 </button>
@@ -69,7 +76,6 @@ class="btn btn-danger btn-sm ms-2"
 onclick="deleteExpense(${expense.id})">
 
 <i class="bi bi-trash"></i>
-
 Delete
 
 </button>
@@ -98,9 +104,7 @@ function searchExpense() {
         .toLowerCase();
 
     let filtered = expenses.filter(expense =>
-
         expense.expenseName.toLowerCase().includes(keyword)
-
     );
 
     displayExpenses(filtered);
@@ -113,10 +117,8 @@ function searchExpense() {
 
 function deleteExpense(id) {
 
-    if (!confirm("Delete this expense?")) {
-
+    if (!confirm("Are you sure you want to delete this expense?")) {
         return;
-
     }
 
     fetch(API_BASE_URL + "/expenses/" + id, {
@@ -129,7 +131,7 @@ function deleteExpense(id) {
 
     .then(data => {
 
-        alert(data);
+        showToast(data, "success");
 
         loadExpenses();
 
@@ -138,6 +140,8 @@ function deleteExpense(id) {
     .catch(error => {
 
         console.error(error);
+
+        showToast("Unable to delete expense", "error");
 
     });
 

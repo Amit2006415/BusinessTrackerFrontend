@@ -1,6 +1,14 @@
-// =====================================
+// =======================================
+// Check Login
+// =======================================
+
+if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html";
+}
+
+// =======================================
 // Add Expense
-// =====================================
+// =======================================
 
 const expenseForm = document.getElementById("expenseForm");
 
@@ -8,15 +16,36 @@ expenseForm.addEventListener("submit", function(e) {
 
     e.preventDefault();
 
+    const expenseName = document.getElementById("expenseName").value.trim();
+    const expenseDate = document.getElementById("expenseDate").value;
+    const amount = parseFloat(document.getElementById("amount").value);
+    const description = document.getElementById("description").value.trim();
+
+    // ==========================
+    // Validation
+    // ==========================
+
+    if (expenseName === "") {
+        showToast("Please enter Expense Name", "warning");
+        return;
+    }
+
+    if (expenseDate === "") {
+        showToast("Please select Expense Date", "warning");
+        return;
+    }
+
+    if (isNaN(amount) || amount <= 0) {
+        showToast("Please enter a valid Amount", "warning");
+        return;
+    }
+
     const expense = {
 
-        expenseName: document.getElementById("expenseName").value,
-
-        expenseDate: document.getElementById("expenseDate").value,
-
-        amount: parseFloat(document.getElementById("amount").value),
-
-        description: document.getElementById("description").value
+        expenseName: expenseName,
+        expenseDate: expenseDate,
+        amount: amount,
+        description: description
 
     };
 
@@ -44,9 +73,13 @@ expenseForm.addEventListener("submit", function(e) {
 
     .then(data => {
 
-        alert("✅ Expense Added Successfully!");
+        showToast("Expense Added Successfully", "success");
 
-        window.location.href = "expenses.html";
+        setTimeout(() => {
+
+            window.location.href = "expenses.html";
+
+        }, 1000);
 
     })
 
@@ -54,7 +87,7 @@ expenseForm.addEventListener("submit", function(e) {
 
         console.error(error);
 
-        alert("❌ Error while saving expense!");
+        showToast("Unable to save expense", "error");
 
     });
 

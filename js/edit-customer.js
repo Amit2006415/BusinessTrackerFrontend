@@ -1,19 +1,35 @@
-// ====================================
-// Get Customer ID From URL
-// ====================================
+// ==========================================
+// Check Login
+// ==========================================
+
+if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html";
+}
+
+// ==========================================
+// Get Customer ID
+// ==========================================
 
 const params = new URLSearchParams(window.location.search);
 const customerId = params.get("id");
 
-// ====================================
-// Load Customer Details
-// ====================================
+// ==========================================
+// Load Customer
+// ==========================================
 
 function loadCustomer() {
 
     fetch(API_BASE_URL + "/customers/" + customerId)
 
-    .then(response => response.json())
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Customer Not Found");
+        }
+
+        return response.json();
+
+    })
 
     .then(customer => {
 
@@ -29,83 +45,127 @@ function loadCustomer() {
     .catch(error => {
 
         console.error(error);
-        alert("Failed to load customer.");
+
+        showToast("Unable to load customer", "error");
 
     });
 
 }
 
-// ====================================
+// ==========================================
 // Update Customer
-// ====================================
+// ==========================================
 
-document.getElementById("editCustomerForm")
-    .addEventListener("submit", function(e) {
+const editCustomerForm = document.getElementById("editCustomerForm");
 
-        e.preventDefault();
+editCustomerForm.addEventListener("submit", function(e) {
 
-        const customer = {
+    e.preventDefault();
 
-            id: customerId,
+    const customerName = document.getElementById("customerName").value.trim();
+    const workDate = document.getElementById("workDate").value;
+    const product = document.getElementById("product").value.trim();
+    const totalAmount = parseFloat(document.getElementById("totalAmount").value);
+    const advancePayment = parseFloat(document.getElementById("advancePayment").value);
 
-            customerName: document.getElementById("customerName").value,
+    // ==========================
+    // Validation
+    // ==========================
 
-            workDate: document.getElementById("workDate").value,
+    if (customerName === "") {
 
-            product: document.getElementById("product").value,
+        showToast("Please enter Customer Name", "warning");
+        return;
 
-            totalAmount: parseFloat(document.getElementById("totalAmount").value),
+    }
 
-            advancePayment: parseFloat(document.getElementById("advancePayment").value)
+    if (product === "") {
 
-        };
+        showToast("Please enter Product Name", "warning");
+        return;
 
-        fetch(API_BASE_URL + "/customers/" + customerId, {
+    }
 
-            method: "PUT",
+    if (isNaN(totalAmount) || totalAmount <= 0) {
 
-            headers: {
+        showToast("Enter valid Total Amount", "warning");
+        return;
 
-                "Content-Type": "application/json"
+    }
 
-            },
+    if (advancePayment > totalAmount) {
 
-            body: JSON.stringify(customer)
+        showToast("Advance cannot be greater than Total Amount", "warning");
+        return;
 
-        })
+    }
 
-        .then(response => {
+    const customer = {
 
-            if (!response.ok) {
+        id: customerId,
 
-                throw new Error("Update Failed");
+        customerName: customerName,
 
-            }
+        workDate: workDate,
 
-            return response.json();
+        product: product,
 
-        })
+        totalAmount: totalAmount,
 
-        .then(data => {
+        advancePayment: advancePayment
 
-            alert("✅ Customer Updated Successfully");
+    };
+
+    fetch(API_BASE_URL + "/customers/" + customerId, {
+
+        method: "PUT",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify(customer)
+
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+
+            throw new Error("Update Failed");
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        showToast("Customer Updated Successfully", "success");
+
+        setTimeout(() => {
 
             window.location.href = "customers.html";
 
-        })
+        }, 1000);
 
-        .catch(error => {
+    })
 
-            console.error(error);
+    .catch(error => {
 
-            alert("❌ Unable to Update Customer");
+        console.error(error);
 
-        });
+        showToast("Unable to update customer", "error");
 
     });
 
-// ====================================
+});
+
+// ==========================================
 // Start
-// ====================================
+// ==========================================
 
 loadCustomer();
