@@ -7,27 +7,27 @@ function showToast(message, type = "success") {
     const toast = document.getElementById("appToast");
     const toastMessage = document.getElementById("toastMessage");
 
-    if (!toast || !toastMessage) return;
+    if (toast && toastMessage) {
 
-    toastMessage.innerHTML = message;
+        toastMessage.innerHTML = message;
 
-    toast.classList.remove(
-        "text-bg-success",
-        "text-bg-danger",
-        "text-bg-warning"
-    );
+        toast.classList.remove(
+            "text-bg-success",
+            "text-bg-danger",
+            "text-bg-warning"
+        );
 
-    if (type === "success") {
-        toast.classList.add("text-bg-success");
-    } else if (type === "error") {
-        toast.classList.add("text-bg-danger");
-    } else {
-        toast.classList.add("text-bg-warning");
+        if (type === "success") {
+            toast.classList.add("text-bg-success");
+        } else if (type === "error") {
+            toast.classList.add("text-bg-danger");
+        } else {
+            toast.classList.add("text-bg-warning");
+        }
+
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
     }
-
-    const bsToast = new bootstrap.Toast(toast);
-    bsToast.show();
-
 }
 
 // ==========================================
@@ -39,18 +39,29 @@ document.addEventListener("DOMContentLoaded", function() {
     const menuBtn = document.getElementById("menuBtn");
     const sidebar = document.querySelector(".sidebar");
 
-    if (!menuBtn || !sidebar) return;
+    if (!menuBtn) {
+        console.log("menuBtn not found");
+        return;
+    }
+
+    if (!sidebar) {
+        console.log("sidebar not found");
+        return;
+    }
 
     // Toggle Sidebar
-    menuBtn.addEventListener("click", function(e) {
 
+    menuBtn.onclick = function(e) {
+
+        e.preventDefault();
         e.stopPropagation();
 
         sidebar.classList.toggle("show");
 
-    });
+    };
 
-    // Close when clicking outside
+    // Close Sidebar when clicking outside
+
     document.addEventListener("click", function(e) {
 
         if (
@@ -65,7 +76,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
-    // Close when menu item clicked
+    // Close Sidebar after clicking menu
+
     sidebar.querySelectorAll("a").forEach(function(link) {
 
         link.addEventListener("click", function() {
