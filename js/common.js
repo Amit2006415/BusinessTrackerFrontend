@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         e.stopPropagation();
 
-        sidebar.classList.toggle("active");
+        sidebar.classList.toggle("show");
 
     });
 
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
             !menuBtn.contains(e.target)
         ) {
 
-            sidebar.classList.remove("active");
+            sidebar.classList.contains("show")
 
         }
 
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         link.addEventListener("click", function() {
 
-            sidebar.classList.remove("active");
+            sidebar.classList.remove("show");
 
         });
 

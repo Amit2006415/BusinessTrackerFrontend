@@ -91,6 +91,10 @@ body {
 ------------------------------ */
 
 .topbar {
+    background: #0d6efd;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -154,16 +158,30 @@ body {
    Responsive
 ------------------------------ */
 
+
+/* ---------- Mobile ---------- */
+
 @media(max-width:992px) {
     .sidebar {
-        position: relative;
-        width: 100%;
-        min-height: auto;
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100vh;
+        transition: .3s;
+        z-index: 999;
+    }
+    .sidebar.show {
+        left: 0;
     }
     .content {
         margin-left: 0;
+        padding: 15px;
     }
-    .wrapper {
-        flex-direction: column;
+    .topbar {
+        padding: 15px;
+    }
+    .topbar h2 {
+        font-size: 22px;
     }
 }
