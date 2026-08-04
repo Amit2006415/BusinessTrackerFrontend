@@ -16,7 +16,7 @@ loginForm.addEventListener("submit", function(e) {
         password: password
     };
 
-    fetch(API_BASE_URL.replace("/api", "") + "/api/admin/login", {
+    fetch(API_BASE_URL + "/admin/login", {
 
         method: "POST",
 
@@ -37,13 +37,17 @@ loginForm.addEventListener("submit", function(e) {
             localStorage.setItem("isLoggedIn", "true");
             localStorage.setItem("adminEmail", email);
 
-            alert("✅ Login Successful");
+            showToast("Login Successful");
 
-            window.location.href = "dashboard.html";
+            setTimeout(() => {
+
+                window.location.href = "dashboard.html";
+
+            }, 1000);
 
         } else {
 
-            alert("❌ Invalid Email or Password");
+            showToast("Invalid Email or Password", "error");
 
         }
 
@@ -53,8 +57,122 @@ loginForm.addEventListener("submit", function(e) {
 
         console.error(error);
 
-        alert("❌ Unable to connect to server.");
+        showToast("Unable to connect to server", "error");
 
     });
 
 });
+
+// =====================================
+// Show / Hide Password
+// =====================================
+
+const togglePassword = document.getElementById("togglePassword");
+const passwordField = document.getElementById("password");
+
+if (togglePassword && passwordField) {
+
+    togglePassword.addEventListener("click", function() {
+
+        if (passwordField.type === "password") {
+
+            passwordField.type = "text";
+            this.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+
+        } else {
+
+            passwordField.type = "password";
+            this.innerHTML = '<i class="bi bi-eye-fill"></i>';
+
+        }
+
+    });
+
+}
+
+// =====================================
+// Forgot Password
+// =====================================
+
+const updatePasswordBtn = document.getElementById("updatePasswordBtn");
+
+if (updatePasswordBtn) {
+
+    updatePasswordBtn.addEventListener("click", function() {
+
+        const email = document.getElementById("forgotEmail").value.trim();
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (email === "" || newPassword === "" || confirmPassword === "") {
+
+            showToast("Please fill all fields", "warning");
+            return;
+
+        }
+
+        if (newPassword !== confirmPassword) {
+
+            showToast("Passwords do not match", "error");
+            return;
+
+        }
+
+        const request = {
+
+            email: email,
+            newPassword: newPassword
+
+        };
+
+        fetch(API_BASE_URL + "/admin/change-password", {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(request)
+
+        })
+
+        .then(response => response.text())
+
+        .then(result => {
+
+            if (result === "Password Updated Successfully") {
+
+                showToast("Password Updated Successfully");
+
+                document.getElementById("forgotEmail").value = "";
+                document.getElementById("newPassword").value = "";
+                document.getElementById("confirmPassword").value = "";
+
+                const modal = bootstrap.Modal.getInstance(
+                    document.getElementById("forgotPasswordModal")
+                );
+
+                if (modal) {
+                    modal.hide();
+                }
+
+            } else {
+
+                showToast(result, "error");
+
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(error);
+
+            showToast("Unable to update password", "error");
+
+        });
+
+    });
+
+}
