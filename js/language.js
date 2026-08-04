@@ -61,8 +61,8 @@ const translations = {
         totalIncome: "एकूण उत्पन्न",
         totalExpense: "एकूण खर्च",
         totalProfit: "एकूण नफा",
-        paidCustomers: "पैसे भरलेले ग्राहक",
-        unpaidCustomers: "बाकी ग्राहक",
+        paidCustomers: "पैसे दिलेले ग्राहक",
+        unpaidCustomers: "पैसे बाकी असलेले ग्राहक",
         recentCustomers: "अलीकडील ग्राहक",
 
         // Customer Page
