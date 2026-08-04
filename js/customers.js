@@ -1,8 +1,12 @@
 // ================================
-// Load All Customers
+// Global Variables
 // ================================
 
 let customers = [];
+
+// ================================
+// Load All Customers
+// ================================
 
 function loadCustomers() {
 
@@ -14,7 +18,26 @@ function loadCustomers() {
 
         customers = data;
 
-        displayCustomers(customers);
+        // Read status from URL
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get("status");
+
+        if (status) {
+
+            const filteredCustomers = customers.filter(customer => {
+
+                return customer.paymentStatus &&
+                    customer.paymentStatus.toUpperCase() === status.toUpperCase();
+
+            });
+
+            displayCustomers(filteredCustomers);
+
+        } else {
+
+            displayCustomers(customers);
+
+        }
 
     })
 
@@ -106,6 +129,20 @@ function searchCustomer() {
         customer.customerName.toLowerCase().includes(keyword)
 
     );
+
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("status");
+
+    if (status) {
+
+        filtered = filtered.filter(customer =>
+
+            customer.paymentStatus &&
+            customer.paymentStatus.toUpperCase() === status.toUpperCase()
+
+        );
+
+    }
 
     displayCustomers(filtered);
 

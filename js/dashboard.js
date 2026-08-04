@@ -90,6 +90,26 @@ function loadCustomers() {
 }
 
 // ==========================================
+// Open Paid Customers
+// ==========================================
+
+function openPaidCustomers() {
+
+    window.location.href = "customers.html?status=PAID";
+
+}
+
+// ==========================================
+// Open Unpaid Customers
+// ==========================================
+
+function openUnpaidCustomers() {
+
+    window.location.href = "customers.html?status=UNPAID";
+
+}
+
+// ==========================================
 // Logout
 // ==========================================
 
