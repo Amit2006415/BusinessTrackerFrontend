@@ -39,29 +39,23 @@ document.addEventListener("DOMContentLoaded", function() {
     const menuBtn = document.getElementById("menuBtn");
     const sidebar = document.querySelector(".sidebar");
 
-    if (!menuBtn) {
-        console.log("menuBtn not found");
-        return;
-    }
-
-    if (!sidebar) {
-        console.log("sidebar not found");
+    // If this page doesn't have a sidebar (like Login page),
+    // simply stop without showing any console message.
+    if (!menuBtn || !sidebar) {
         return;
     }
 
     // Toggle Sidebar
-
-    menuBtn.onclick = function(e) {
+    menuBtn.addEventListener("click", function(e) {
 
         e.preventDefault();
         e.stopPropagation();
 
         sidebar.classList.toggle("show");
 
-    };
+    });
 
     // Close Sidebar when clicking outside
-
     document.addEventListener("click", function(e) {
 
         if (
@@ -69,15 +63,12 @@ document.addEventListener("DOMContentLoaded", function() {
             !sidebar.contains(e.target) &&
             !menuBtn.contains(e.target)
         ) {
-
             sidebar.classList.remove("show");
-
         }
 
     });
 
-    // Close Sidebar after clicking menu
-
+    // Close Sidebar after clicking menu item
     sidebar.querySelectorAll("a").forEach(function(link) {
 
         link.addEventListener("click", function() {

@@ -1,178 +1,186 @@
 // =====================================
-// Login
+// Wait until page is loaded
 // =====================================
 
-const loginForm = document.getElementById("loginForm");
+document.addEventListener("DOMContentLoaded", function() {
 
-loginForm.addEventListener("submit", function(e) {
+    // =====================================
+    // Login
+    // =====================================
 
-    e.preventDefault();
+    const loginForm = document.getElementById("loginForm");
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+    if (loginForm) {
 
-    const admin = {
-        email: email,
-        password: password
-    };
+        loginForm.addEventListener("submit", function(e) {
 
-    fetch(API_BASE_URL + "/admin/login", {
+            e.preventDefault();
 
-        method: "POST",
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+            fetch(API_BASE_URL + "/admin/login", {
 
-        body: JSON.stringify(admin)
+                method: "POST",
 
-    })
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-    .then(response => response.text())
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
 
-    .then(result => {
+            })
 
-        if (result === "Login Successful") {
+            .then(res => res.text())
 
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("adminEmail", email);
+            .then(result => {
 
-            showToast("Login Successful");
+                if (result === "Login Successful") {
 
-            setTimeout(() => {
+                    localStorage.setItem("isLoggedIn", "true");
+                    localStorage.setItem("adminEmail", email);
 
-                window.location.href = "dashboard.html";
+                    showToast("Login Successful");
 
-            }, 1000);
+                    setTimeout(() => {
 
-        } else {
+                        window.location.href = "dashboard.html";
 
-            showToast("Invalid Email or Password", "error");
+                    }, 1000);
 
-        }
+                } else {
 
-    })
+                    showToast("Invalid Email or Password", "error");
 
-    .catch(error => {
-
-        console.error(error);
-
-        showToast("Unable to connect to server", "error");
-
-    });
-
-});
-
-// =====================================
-// Show / Hide Password
-// =====================================
-
-const togglePassword = document.getElementById("togglePassword");
-const passwordField = document.getElementById("password");
-
-if (togglePassword && passwordField) {
-
-    togglePassword.addEventListener("click", function() {
-
-        if (passwordField.type === "password") {
-
-            passwordField.type = "text";
-            this.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-
-        } else {
-
-            passwordField.type = "password";
-            this.innerHTML = '<i class="bi bi-eye-fill"></i>';
-
-        }
-
-    });
-
-}
-
-// =====================================
-// Forgot Password
-// =====================================
-
-const updatePasswordBtn = document.getElementById("updatePasswordBtn");
-
-if (updatePasswordBtn) {
-
-    updatePasswordBtn.addEventListener("click", function() {
-
-        const email = document.getElementById("forgotEmail").value.trim();
-        const newPassword = document.getElementById("newPassword").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
-
-        if (email === "" || newPassword === "" || confirmPassword === "") {
-
-            showToast("Please fill all fields", "warning");
-            return;
-
-        }
-
-        if (newPassword !== confirmPassword) {
-
-            showToast("Passwords do not match", "error");
-            return;
-
-        }
-
-        const request = {
-
-            email: email,
-            newPassword: newPassword
-
-        };
-
-        fetch(API_BASE_URL + "/admin/change-password", {
-
-            method: "PUT",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify(request)
-
-        })
-
-        .then(response => response.text())
-
-        .then(result => {
-
-            if (result === "Password Updated Successfully") {
-
-                showToast("Password Updated Successfully");
-
-                document.getElementById("forgotEmail").value = "";
-                document.getElementById("newPassword").value = "";
-                document.getElementById("confirmPassword").value = "";
-
-                const modal = bootstrap.Modal.getInstance(
-                    document.getElementById("forgotPasswordModal")
-                );
-
-                if (modal) {
-                    modal.hide();
                 }
 
-            } else {
+            })
 
-                showToast(result, "error");
+            .catch(error => {
 
-            }
+                console.error(error);
 
-        })
+                showToast("Unable to connect to server", "error");
 
-        .catch(error => {
-
-            console.error(error);
-
-            showToast("Unable to update password", "error");
+            });
 
         });
 
-    });
+    }
 
-}
+    // =====================================
+    // Show Password
+    // =====================================
+
+    const togglePassword = document.getElementById("togglePassword");
+    const password = document.getElementById("password");
+
+    if (togglePassword && password) {
+
+        togglePassword.addEventListener("click", function() {
+
+            if (password.type === "password") {
+
+                password.type = "text";
+                this.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+
+            } else {
+
+                password.type = "password";
+                this.innerHTML = '<i class="bi bi-eye-fill"></i>';
+
+            }
+
+        });
+
+    }
+
+    // =====================================
+    // Forgot Password
+    // =====================================
+
+    const updateBtn = document.getElementById("updatePasswordBtn");
+
+    if (updateBtn) {
+
+        updateBtn.addEventListener("click", function() {
+
+            const email = document.getElementById("forgotEmail").value.trim();
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (email === "" || newPassword === "" || confirmPassword === "") {
+
+                showToast("Please fill all fields", "warning");
+                return;
+
+            }
+
+            if (newPassword !== confirmPassword) {
+
+                showToast("Passwords do not match", "error");
+                return;
+
+            }
+
+            fetch(API_BASE_URL + "/admin/change-password", {
+
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    email: email,
+                    newPassword: newPassword
+
+                })
+
+            })
+
+            .then(res => res.text())
+
+            .then(result => {
+
+                if (result === "Password Updated Successfully") {
+
+                    showToast("Password Updated Successfully");
+
+                    document.getElementById("forgotEmail").value = "";
+                    document.getElementById("newPassword").value = "";
+                    document.getElementById("confirmPassword").value = "";
+
+                    const modalElement = document.getElementById("forgotPasswordModal");
+
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+
+                    if (modal) {
+                        modal.hide();
+                    }
+
+                } else {
+
+                    showToast(result, "error");
+
+                }
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                showToast("Unable to update password", "error");
+
+            });
+
+        });
+
+    }
+
+});
