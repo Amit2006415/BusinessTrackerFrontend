@@ -75,6 +75,40 @@ function loadExpense() {
 }
 
 // ==========================================
+// Load Total Due Amount
+// ==========================================
+
+function loadDueAmount() {
+
+    fetch(API_BASE_URL + "/customers/due/total")
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Failed to load due amount");
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        document.getElementById("dueAmount").innerHTML = "₹ " + data;
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        showToast("Unable to load Due Amount", "error");
+
+    });
+
+}
+
+// ==========================================
 // Load Total Profit
 // ==========================================
 
@@ -116,6 +150,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     loadIncome();
     loadExpense();
+    loadDueAmount();
     loadProfit();
 
 });
