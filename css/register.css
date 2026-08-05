@@ -1,0 +1,159 @@
+/* ==========================================
+   Global
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f4f7fb;
+}
+
+
+/* ==========================================
+   Left Side
+========================================== */
+
+.left-side {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.overlay {
+    text-align: center;
+    padding: 50px;
+}
+
+.overlay h1 {
+    font-size: 55px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.overlay p {
+    font-size: 20px;
+    opacity: .9;
+}
+
+
+/* ==========================================
+   Right Side
+========================================== */
+
+.right-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 480px;
+    padding: 40px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+}
+
+
+/* ==========================================
+   Headings
+========================================== */
+
+.register-card h2 {
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.register-card p {
+    color: #666;
+}
+
+
+/* ==========================================
+   Labels
+========================================== */
+
+label {
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+
+/* ==========================================
+   Input Group
+========================================== */
+
+.input-group-text {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+}
+
+.form-control {
+    height: 48px;
+    border-radius: 0;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #2563eb;
+}
+
+.btn-outline-secondary {
+    border-color: #ced4da;
+}
+
+
+/* ==========================================
+   Register Button
+========================================== */
+
+.btn-primary {
+    background: #2563eb;
+    border: none;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+
+/* ==========================================
+   Login Link
+========================================== */
+
+a {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media(max-width:992px) {
+    .left-side {
+        display: none;
+    }
+    .register-card {
+        margin: 20px;
+        padding: 30px;
+    }
+}

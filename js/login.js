@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
 
-            fetch(API_BASE_URL + "/admin/login", {
+            fetch(API_BASE_URL + "/users/login", {
 
                 method: "POST",
 
@@ -34,14 +34,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
             })
 
-            .then(res => res.text())
+            .then(response => response.text())
 
             .then(result => {
 
                 if (result === "Login Successful") {
 
                     localStorage.setItem("isLoggedIn", "true");
-                    localStorage.setItem("adminEmail", email);
+
+                    // Store logged in user
+                    localStorage.setItem("userEmail", email);
 
                     showToast("Login Successful");
 
@@ -53,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 } else {
 
-                    showToast("Invalid Email or Password", "error");
+                    showToast(result, "error");
 
                 }
 
@@ -72,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =====================================
-    // Show Password
+    // Show / Hide Password
     // =====================================
 
     const togglePassword = document.getElementById("togglePassword");
@@ -126,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
 
-            fetch(API_BASE_URL + "/admin/change-password", {
+            fetch(API_BASE_URL + "/users/change-password", {
 
                 method: "PUT",
 
@@ -143,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             })
 
-            .then(res => res.text())
+            .then(response => response.text())
 
             .then(result => {
 

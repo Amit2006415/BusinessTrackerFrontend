@@ -1,61 +1,47 @@
-/* ===========================
-   Global
-=========================== */
+/* ==========================================
+   Google Font
+========================================== */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 body {
-    background: #f4f7fb;
-    overflow-x: hidden;
+    background: #f4f7fc;
 }
 
 
-/* ===========================
-   Layout
-=========================== */
+/* ==========================================
+   Wrapper
+========================================== */
 
 .wrapper {
     display: flex;
+    min-height: 100vh;
 }
 
 
-/* ===========================
+/* ==========================================
    Sidebar
-=========================== */
+========================================== */
 
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background: #0d6efd;
+    width: 270px;
+    background: #1e6df2;
     color: white;
-    position: fixed;
-    left: 0;
-    top: 0;
-    transition: .3s;
-    z-index: 999;
+    transition: 0.3s;
 }
 
-.sidebar.close {
-    left: -250px;
-}
-
-.sidebar.show {
-    left: 0;
-}
-
-.logo {
+.sidebar .logo {
     text-align: center;
-    padding: 25px;
+    padding: 30px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, .2);
 }
 
-.logo h2 {
-    font-size: 26px;
+.sidebar .logo h2 {
     font-weight: 700;
 }
 
@@ -65,139 +51,191 @@ body {
 }
 
 .sidebar ul li {
-    margin: 8px 0;
+    margin: 5px 0;
 }
 
 .sidebar ul li a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 15px;
     color: white;
     text-decoration: none;
-    padding: 14px 25px;
+    padding: 15px 25px;
     transition: .3s;
+    font-size: 18px;
 }
 
-.sidebar ul li.active a,
-.sidebar ul li a:hover {
-    background: #084298;
+.sidebar ul li a:hover,
+.sidebar ul li.active a {
+    background: rgba(0, 0, 0, .15);
 }
 
 .sidebar i {
-    margin-right: 10px;
+    font-size: 20px;
 }
 
 
-/* ===========================
-   Content
-=========================== */
+/* ==========================================
+   Main Content
+========================================== */
 
 .content {
-    width: 100%;
-    margin-left: 250px;
-    padding: 30px;
-    transition: .3s;
-}
-
-.content.full {
-    margin-left: 0;
+    flex: 1;
+    padding: 35px;
 }
 
 
-/* ===========================
+/* ==========================================
    Topbar
-=========================== */
+========================================== */
 
 .topbar {
-    background: #0d6efd;
-    color: #fff;
-    padding: 15px 20px;
-    border-radius: 10px;
+    background: #1e6df2;
+    color: white;
+    padding: 22px;
+    border-radius: 15px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
 }
 
 .topbar h2 {
-    margin: 0;
-    font-size: 28px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 #menuBtn {
-    font-size: 24px;
+    font-size: 20px;
 }
 
 
-/* ===========================
+/* ==========================================
    Cards
-=========================== */
+========================================== */
 
 .card {
     border: none;
     border-radius: 18px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
-    color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
     transition: .3s;
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
 }
 
 .card-body {
-    padding: 35px;
+    padding: 28px;
     text-align: center;
 }
 
-.card h5 {
-    font-size: 18px;
+.card-body h5,
+.card-body h6 {
+    margin-bottom: 18px;
+    font-weight: 600;
 }
 
-.card h2 {
-    margin-top: 15px;
-    font-size: 36px;
-    font-weight: 700;
+.card-body h2,
+.card-body h3 {
+    font-size: 42px;
+    font-weight: bold;
 }
+
+
+/* ==========================================
+   Income Card
+========================================== */
 
 .income-card {
-    background: #198754;
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    color: white;
 }
+
+
+/* ==========================================
+   Expense Card
+========================================== */
 
 .expense-card {
-    background: #dc3545;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
 }
+
+
+/* ==========================================
+   Due Amount Card
+========================================== */
+
+.due-card {
+    background: linear-gradient(135deg, #facc15, #f59e0b);
+    color: #222;
+}
+
+
+/* ==========================================
+   Current Profit Card
+========================================== */
+
+.current-profit-card {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+}
+
+
+/* ==========================================
+   Total Profit Card
+========================================== */
 
 .profit-card {
-    background: #6610f2;
-}
-
-.current-card {
-    background: darkgray;
+    background: linear-gradient(135deg, #9333ea, #6d28d9);
+    color: white;
 }
 
 
-/* ===========================
-   Mobile
-=========================== */
+/* ==========================================
+   Toast
+========================================== */
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
 
 
-/* ---------- Mobile ---------- */
+/* ==========================================
+   Responsive
+========================================== */
 
-@media (max-width:992px) {
+@media(max-width:992px) {
     .sidebar {
-        position: fixed;
-        top: 0;
-        left: -250px;
-        width: 250px;
-        height: 100vh;
-        background: #0d6efd;
-        transition: 0.3s ease;
-        z-index: 9999;
+        width: 80px;
     }
-    .sidebar.show {
-        left: 0;
+    .sidebar .logo h2 {
+        display: none;
+    }
+    .sidebar ul li a span {
+        display: none;
+    }
+    .sidebar ul li a {
+        justify-content: center;
     }
     .content {
-        margin-left: 0 !important;
+        padding: 20px;
+    }
+    .topbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media(max-width:768px) {
+    .card-body h2,
+    .card-body h3 {
+        font-size: 32px;
+    }
+    .topbar h2 {
+        font-size: 24px;
     }
 }
