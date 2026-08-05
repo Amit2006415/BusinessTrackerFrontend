@@ -10,68 +10,75 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const loginForm = document.getElementById("loginForm");
 
-    if (loginForm) {
+    loginForm.addEventListener("submit", function(e) {
 
-        loginForm.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-            e.preventDefault();
+        const loginBtn = document.getElementById("loginBtn");
+        const loginText = document.getElementById("loginText");
+        const loginSpinner = document.getElementById("loginSpinner");
 
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
+        // Show loading
+        loginBtn.disabled = true;
+        loginText.innerHTML = "Logging in...";
+        loginSpinner.classList.remove("d-none");
 
-            fetch(API_BASE_URL + "/users/login", {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
 
-                method: "POST",
+        const admin = {
+            email: email,
+            password: password
+        };
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        fetch(API_BASE_URL.replace("/api", "") + "/api/admin/login", {
 
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
+            method: "POST",
 
-            })
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-            .then(response => response.text())
+            body: JSON.stringify(admin)
 
-            .then(result => {
+        })
 
-                if (result === "Login Successful") {
+        .then(response => response.text())
 
-                    localStorage.setItem("isLoggedIn", "true");
+        .then(result => {
 
-                    // Store logged in user
-                    localStorage.setItem("userEmail", email);
+            if (result === "Login Successful") {
 
-                    showToast("Login Successful");
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("adminEmail", email);
 
-                    setTimeout(() => {
+                window.location.href = "dashboard.html";
 
-                        window.location.href = "dashboard.html";
+            } else {
 
-                    }, 1000);
+                showToast("Invalid Email or Password", "error");
 
-                } else {
+                loginBtn.disabled = false;
+                loginText.innerHTML = "Login";
+                loginSpinner.classList.add("d-none");
 
-                    showToast(result, "error");
+            }
 
-                }
+        })
 
-            })
+        .catch(error => {
 
-            .catch(error => {
+            console.error(error);
 
-                console.error(error);
+            showToast("Cannot connect to Spring Boot Server", "error");
 
-                showToast("Unable to connect to server", "error");
-
-            });
+            loginBtn.disabled = false;
+            loginText.innerHTML = "Login";
+            loginSpinner.classList.add("d-none");
 
         });
 
-    }
+    });
 
     // =====================================
     // Show / Hide Password

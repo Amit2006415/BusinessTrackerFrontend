@@ -1,136 +1,111 @@
-// =====================================
-// Wait until page is loaded
-// =====================================
+// ==========================================
+// Register Account
+// ==========================================
 
-document.addEventListener("DOMContentLoaded", function() {
+const registerForm = document.getElementById("registerForm");
 
-    // =====================================
-    // Show / Hide Password
-    // =====================================
+registerForm.addEventListener("submit", function(e) {
 
-    const togglePassword = document.getElementById("togglePassword");
-    const password = document.getElementById("password");
+    e.preventDefault();
 
-    if (togglePassword && password) {
+    const registerBtn = document.getElementById("registerBtn");
+    const registerText = document.getElementById("registerText");
+    const registerSpinner = document.getElementById("registerSpinner");
 
-        togglePassword.addEventListener("click", function() {
+    // ==========================
+    // Show Loading
+    // ==========================
 
-            if (password.type === "password") {
+    registerBtn.disabled = true;
+    registerText.innerHTML = "Creating Account...";
+    registerSpinner.classList.remove("d-none");
 
-                password.type = "text";
-                this.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    // ==========================
+    // Get Form Values
+    // ==========================
 
-            } else {
+    const user = {
 
-                password.type = "password";
-                this.innerHTML = '<i class="bi bi-eye-fill"></i>';
+        fullName: document.getElementById("fullName").value.trim(),
 
-            }
+        email: document.getElementById("email").value.trim(),
 
-        });
+        mobile: document.getElementById("mobile").value.trim(),
 
+        password: document.getElementById("password").value
+
+    };
+
+    // ==========================
+    // Validation
+    // ==========================
+
+    if (
+        user.fullName === "" ||
+        user.email === "" ||
+        user.mobile === "" ||
+        user.password === ""
+    ) {
+
+        showToast("Please fill all fields", "warning");
+
+        registerBtn.disabled = false;
+        registerText.innerHTML = "Register";
+        registerSpinner.classList.add("d-none");
+
+        return;
     }
 
-    // =====================================
-    // Show / Hide Confirm Password
-    // =====================================
+    // ==========================
+    // API Call
+    // ==========================
 
-    const toggleConfirmPassword =
-        document.getElementById("toggleConfirmPassword");
+    fetch(API_BASE_URL.replace("/api", "") + "/api/admin/register", {
 
-    const confirmPassword =
-        document.getElementById("confirmPassword");
+        method: "POST",
 
-    if (toggleConfirmPassword && confirmPassword) {
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-        toggleConfirmPassword.addEventListener("click", function() {
+        body: JSON.stringify(user)
 
-            if (confirmPassword.type === "password") {
+    })
 
-                confirmPassword.type = "text";
-                this.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    .then(response => {
 
-            } else {
+        if (!response.ok) {
 
-                confirmPassword.type = "password";
-                this.innerHTML = '<i class="bi bi-eye-fill"></i>';
+            throw new Error("Registration Failed");
 
-            }
+        }
 
-        });
+        return response.text();
 
-    }
+    })
 
-    // =====================================
-    // Register User
-    // =====================================
+    .then(result => {
 
-    const registerForm = document.getElementById("registerForm");
+        showToast("✅ Account Registered Successfully!", "success");
 
-    if (registerForm) {
+        setTimeout(() => {
 
-        registerForm.addEventListener("submit", function(e) {
+            window.location.href = "index.html";
 
-            e.preventDefault();
+        }, 2000);
 
-            const user = {
+    })
 
-                name: document.getElementById("name").value.trim(),
+    .catch(error => {
 
-                email: document.getElementById("email").value.trim(),
+        console.error(error);
 
-                phone: document.getElementById("phone").value.trim(),
+        showToast("❌ Registration Failed!", "error");
 
-                password: document.getElementById("password").value,
+        registerBtn.disabled = false;
+        registerText.innerHTML = "Register";
+        registerSpinner.classList.add("d-none");
 
-                confirmPassword: document.getElementById("confirmPassword").value
-
-            };
-
-            fetch(API_BASE_URL + "/users/register", {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify(user)
-
-            })
-
-            .then(response => response.text())
-
-            .then(result => {
-
-                if (result === "Registration Successful") {
-
-                    showToast("Registration Successful");
-
-                    setTimeout(function() {
-
-                        window.location.href = "index.html";
-
-                    }, 1500);
-
-                } else {
-
-                    showToast(result, "error");
-
-                }
-
-            })
-
-            .catch(error => {
-
-                console.error(error);
-
-                showToast("Unable to connect to server", "error");
-
-            });
-
-        });
-
-    }
+    });
 
 });
