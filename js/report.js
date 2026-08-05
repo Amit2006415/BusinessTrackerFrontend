@@ -107,6 +107,30 @@ function loadDueAmount() {
     });
 
 }
+// ==========================================
+// Load current Profit
+// ==========================================
+
+function loadCurrentProfit() {
+
+    fetch(API_BASE_URL + "/report/current-profit")
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        document.getElementById("currentProfit").innerHTML =
+            "₹ " + data.toFixed(2);
+
+    })
+
+    .catch(err => {
+
+        console.error(err);
+
+    });
+
+}
 
 // ==========================================
 // Load Total Profit
@@ -151,6 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
     loadIncome();
     loadExpense();
     loadDueAmount();
+    loadCurrentProfit();
     loadProfit();
 
 });
