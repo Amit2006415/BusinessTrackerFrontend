@@ -7,7 +7,6 @@ const translations = {
         customers: "Customers",
         expenses: "Expenses",
         reports: "Reports",
-        logout: "Logout",
 
         // Dashboard
         totalCustomers: "Total Customers",
@@ -54,7 +53,6 @@ const translations = {
         customers: "ग्राहक",
         expenses: "खर्च",
         reports: "अहवाल",
-        logout: "लॉगआउट",
 
         // Dashboard
         totalCustomers: "एकूण ग्राहक",
