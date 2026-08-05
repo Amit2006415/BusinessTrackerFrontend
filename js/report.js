@@ -7,17 +7,17 @@ if (localStorage.getItem("isLoggedIn") !== "true") {
 }
 
 // ==========================================
-// Load Total Income
+// Load Report Data
 // ==========================================
 
-function loadIncome() {
+function loadReport() {
 
-    fetch(API_BASE_URL + "/income/total")
+    fetch(API_BASE_URL + "/dashboard")
 
     .then(response => {
 
         if (!response.ok) {
-            throw new Error("Failed to load income");
+            throw new Error("Failed to load report");
         }
 
         return response.json();
@@ -26,133 +26,20 @@ function loadIncome() {
 
     .then(data => {
 
-        document.getElementById("income").innerHTML = "₹ " + data;
+        document.getElementById("income").innerHTML =
+            "₹ " + data.totalIncome.toFixed(2);
 
-    })
+        document.getElementById("expense").innerHTML =
+            "₹ " + data.totalExpense.toFixed(2);
 
-    .catch(error => {
-
-        console.error(error);
-
-        showToast("Unable to load Income", "error");
-
-    });
-
-}
-
-// ==========================================
-// Load Total Expense
-// ==========================================
-
-function loadExpense() {
-
-    fetch(API_BASE_URL + "/expenses/total")
-
-    .then(response => {
-
-        if (!response.ok) {
-            throw new Error("Failed to load expense");
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        document.getElementById("expense").innerHTML = "₹ " + data;
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        showToast("Unable to load Expense", "error");
-
-    });
-
-}
-
-// ==========================================
-// Load Total Due Amount
-// ==========================================
-
-function loadDueAmount() {
-
-    fetch(API_BASE_URL + "/customers/due/total")
-
-    .then(response => {
-
-        if (!response.ok) {
-            throw new Error("Failed to load due amount");
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        document.getElementById("dueAmount").innerHTML = "₹ " + data;
-
-    })
-
-    .catch(error => {
-
-        console.error(error);
-
-        showToast("Unable to load Due Amount", "error");
-
-    });
-
-}
-// ==========================================
-// Load current Profit
-// ==========================================
-
-function loadCurrentProfit() {
-
-    fetch(API_BASE_URL + "/report/current-profit")
-
-    .then(res => res.json())
-
-    .then(data => {
+        document.getElementById("dueAmount").innerHTML =
+            "₹ " + data.totalDueAmount.toFixed(2);
 
         document.getElementById("currentProfit").innerHTML =
-            "₹ " + data.toFixed(2);
+            "₹ " + data.currentProfit.toFixed(2);
 
-    })
-
-    .catch(err => {
-
-        console.error(err);
-
-    });
-
-}
-
-// ==========================================
-// Load Total Profit
-// ==========================================
-
-function loadProfit() {
-
-    fetch(API_BASE_URL + "/profit/total")
-
-    .then(response => {
-
-        if (!response.ok) {
-            throw new Error("Failed to load profit");
-        }
-
-        return response.json();
-
-    })
-
-    .then(data => {
-
-        document.getElementById("profit").innerHTML = "₹ " + data;
+        document.getElementById("profit").innerHTML =
+            "₹ " + data.totalProfit.toFixed(2);
 
     })
 
@@ -160,9 +47,27 @@ function loadProfit() {
 
         console.error(error);
 
-        showToast("Unable to load Profit", "error");
+        showToast("Unable to load Report", "error");
 
     });
+
+}
+
+// ==========================================
+// Logout
+// ==========================================
+
+function logout() {
+
+    if (confirm("Are you sure you want to logout?")) {
+
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("language");
+
+        window.location.href = "index.html";
+
+    }
 
 }
 
@@ -172,10 +77,6 @@ function loadProfit() {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    loadIncome();
-    loadExpense();
-    loadDueAmount();
-    loadCurrentProfit();
-    loadProfit();
+    loadReport();
 
 });

@@ -18,16 +18,33 @@ function loadDashboard() {
 
     .then(data => {
 
-        document.getElementById("totalCustomers").innerHTML = data.totalCustomers;
+        document.getElementById("totalCustomers").innerHTML =
+            data.totalCustomers;
 
         document.getElementById("totalIncome").innerHTML =
-            "₹ " + data.totalIncome;
+            "₹ " + data.totalIncome.toFixed(2);
 
         document.getElementById("totalExpense").innerHTML =
-            "₹ " + data.totalExpense;
+            "₹ " + data.totalExpense.toFixed(2);
 
         document.getElementById("totalProfit").innerHTML =
-            "₹ " + data.totalProfit;
+            "₹ " + data.totalProfit.toFixed(2);
+
+        // Total Due Amount
+        if (document.getElementById("totalDueAmount")) {
+
+            document.getElementById("totalDueAmount").innerHTML =
+                "₹ " + data.totalDueAmount.toFixed(2);
+
+        }
+
+        // Current Profit
+        if (document.getElementById("currentProfit")) {
+
+            document.getElementById("currentProfit").innerHTML =
+                "₹ " + data.currentProfit.toFixed(2);
+
+        }
 
         document.getElementById("paidCustomers").innerHTML =
             data.paidCustomers;

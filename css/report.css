@@ -171,6 +171,10 @@ body {
     background: #6610f2;
 }
 
+.current-card {
+    background: darkgray;
+}
+
 
 /* ===========================
    Mobile
