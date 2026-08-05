@@ -1,93 +1,101 @@
 // =====================================
-// Wait until page is loaded
+// Wait Until Page Loads
 // =====================================
 
 document.addEventListener("DOMContentLoaded", function() {
 
     // =====================================
-    // Login
+    // LOGIN
     // =====================================
 
     const loginForm = document.getElementById("loginForm");
 
-    loginForm.addEventListener("submit", function(e) {
+    if (loginForm) {
 
-        e.preventDefault();
+        loginForm.addEventListener("submit", function(e) {
 
-        const loginBtn = document.getElementById("loginBtn");
-        const loginText = document.getElementById("loginText");
-        const loginSpinner = document.getElementById("loginSpinner");
+            e.preventDefault();
 
-        // Show loading
-        loginBtn.disabled = true;
-        loginText.innerHTML = "Logging in...";
-        loginSpinner.classList.remove("d-none");
+            const loginBtn = document.getElementById("loginBtn");
+            const loginText = document.getElementById("loginText");
+            const loginSpinner = document.getElementById("loginSpinner");
 
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
+            loginBtn.disabled = true;
+            loginText.innerHTML = "Logging in...";
+            loginSpinner.classList.remove("d-none");
 
-        const admin = {
-            email: email,
-            password: password
-        };
+            const admin = {
 
-        fetch(API_BASE_URL.replace("/api", "") + "/api/admin/login", {
+                email: document.getElementById("email").value.trim(),
+                password: document.getElementById("password").value
 
-            method: "POST",
+            };
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+            fetch(API_BASE_URL.replace("/api", "") + "/api/admin/login", {
 
-            body: JSON.stringify(admin)
+                method: "POST",
 
-        })
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-        .then(response => response.text())
+                body: JSON.stringify(admin)
 
-        .then(result => {
+            })
 
-            if (result === "Login Successful") {
+            .then(response => response.text())
 
-                localStorage.setItem("isLoggedIn", "true");
-                localStorage.setItem("adminEmail", email);
+            .then(result => {
 
-                window.location.href = "dashboard.html";
+                if (result.trim() === "Login Successful") {
 
-            } else {
+                    localStorage.setItem("isLoggedIn", "true");
+                    localStorage.setItem("adminEmail", admin.email);
 
-                showToast("Invalid Email or Password", "error");
+                    showToast("Login Successful", "success");
+
+                    setTimeout(() => {
+
+                        window.location.href = "dashboard.html";
+
+                    }, 1000);
+
+                } else {
+
+                    showToast(result, "error");
+
+                    loginBtn.disabled = false;
+                    loginText.innerHTML = "Login";
+                    loginSpinner.classList.add("d-none");
+
+                }
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                showToast("Unable to connect to server", "error");
 
                 loginBtn.disabled = false;
                 loginText.innerHTML = "Login";
                 loginSpinner.classList.add("d-none");
 
-            }
-
-        })
-
-        .catch(error => {
-
-            console.error(error);
-
-            showToast("Cannot connect to Spring Boot Server", "error");
-
-            loginBtn.disabled = false;
-            loginText.innerHTML = "Login";
-            loginSpinner.classList.add("d-none");
+            });
 
         });
 
-    });
+    }
 
     // =====================================
-    // Show / Hide Password
+    // SHOW PASSWORD
     // =====================================
 
     const togglePassword = document.getElementById("togglePassword");
     const password = document.getElementById("password");
 
-    if (togglePassword && password) {
+    if (togglePassword) {
 
         togglePassword.addEventListener("click", function() {
 
@@ -108,7 +116,121 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =====================================
-    // Forgot Password
+    // LOAD SECURITY QUESTION
+    // =====================================
+
+    const loadQuestionBtn = document.getElementById("loadQuestionBtn");
+
+    if (loadQuestionBtn) {
+
+        loadQuestionBtn.addEventListener("click", function() {
+
+            const email = document.getElementById("forgotEmail").value.trim();
+
+            if (email === "") {
+
+                showToast("Enter Email First", "warning");
+                return;
+
+            }
+
+            fetch(API_BASE_URL + "/admin/security-question/" + encodeURIComponent(email))
+
+            .then(response => response.text())
+
+            .then(question => {
+
+                if (question === "Email Not Found") {
+
+                    showToast(question, "error");
+                    return;
+
+                }
+
+                document.getElementById("securityQuestion").value = question;
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+                showToast("Unable to load security question", "error");
+
+            });
+
+        });
+
+    }
+
+    // =====================================
+    // VERIFY SECURITY ANSWER
+    // =====================================
+
+    const verifyBtn = document.getElementById("verifyAnswerBtn");
+
+    if (verifyBtn) {
+
+        verifyBtn.addEventListener("click", function() {
+
+            const email = document.getElementById("forgotEmail").value.trim();
+
+            const answer = document.getElementById("securityAnswer").value.trim();
+
+            if (answer === "") {
+
+                showToast("Enter Security Answer", "warning");
+                return;
+
+            }
+
+            fetch(API_BASE_URL + "/admin/verify-answer?email=" +
+
+                encodeURIComponent(email) +
+
+                "&answer=" +
+
+                encodeURIComponent(answer),
+
+                {
+
+                    method: "POST"
+
+                })
+
+            .then(response => response.text())
+
+            .then(result => {
+
+                if (result === "Verified") {
+
+                    showToast("Answer Verified", "success");
+
+                    document.getElementById("newPassword").disabled = false;
+                    document.getElementById("confirmPassword").disabled = false;
+                    document.getElementById("updatePasswordBtn").disabled = false;
+
+                } else {
+
+                    showToast(result, "error");
+
+                }
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                showToast("Verification Failed", "error");
+
+            });
+
+        });
+
+    }
+
+    // =====================================
+    // UPDATE PASSWORD
     // =====================================
 
     const updateBtn = document.getElementById("updatePasswordBtn");
@@ -121,9 +243,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const newPassword = document.getElementById("newPassword").value;
             const confirmPassword = document.getElementById("confirmPassword").value;
 
-            if (email === "" || newPassword === "" || confirmPassword === "") {
+            if (newPassword === "" || confirmPassword === "") {
 
-                showToast("Please fill all fields", "warning");
+                showToast("Fill Password Fields", "warning");
                 return;
 
             }
@@ -135,12 +257,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
 
-            fetch(API_BASE_URL + "/users/change-password", {
+            fetch(API_BASE_URL + "/admin/change-password", {
 
                 method: "PUT",
 
                 headers: {
+
                     "Content-Type": "application/json"
+
                 },
 
                 body: JSON.stringify({
@@ -156,27 +280,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
             .then(result => {
 
-                if (result === "Password Updated Successfully") {
+                showToast(result, "success");
 
-                    showToast("Password Updated Successfully");
+                setTimeout(() => {
 
-                    document.getElementById("forgotEmail").value = "";
-                    document.getElementById("newPassword").value = "";
-                    document.getElementById("confirmPassword").value = "";
-
-                    const modalElement = document.getElementById("forgotPasswordModal");
-
-                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    const modal = bootstrap.Modal.getInstance(
+                        document.getElementById("forgotPasswordModal")
+                    );
 
                     if (modal) {
                         modal.hide();
                     }
 
-                } else {
-
-                    showToast(result, "error");
-
-                }
+                }, 1000);
 
             })
 
@@ -184,7 +300,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 console.error(error);
 
-                showToast("Unable to update password", "error");
+                showToast("Unable to Update Password", "error");
 
             });
 

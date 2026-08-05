@@ -1,0 +1,154 @@
+/* ==========================================
+   Google Font & Reset
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: #f4f7fc;
+}
+
+
+/* ==========================================
+   Left Side
+========================================== */
+
+.left-side {
+    background: linear-gradient(135deg, #0d6efd, #084298);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.overlay {
+    width: 80%;
+}
+
+.overlay h1 {
+    font-size: 52px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.overlay p {
+    font-size: 20px;
+    line-height: 34px;
+}
+
+
+/* ==========================================
+   Right Side
+========================================== */
+
+.right-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+}
+
+
+/* ==========================================
+   Register Card
+========================================== */
+
+.register-card {
+    width: 440px;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .15);
+}
+
+.register-card h2 {
+    color: #0d6efd;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.register-card p {
+    color: #777;
+    margin-bottom: 25px;
+}
+
+
+/* ==========================================
+   Labels
+========================================== */
+
+label {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+
+/* ==========================================
+   Inputs
+========================================== */
+
+.form-control,
+.form-select {
+    height: 50px;
+}
+
+.input-group-text {
+    background: #0d6efd;
+    color: white;
+    border: none;
+    width: 48px;
+    justify-content: center;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 .2rem rgba(13, 110, 253, .25);
+}
+
+
+/* ==========================================
+   Button
+========================================== */
+
+.btn-primary {
+    height: 52px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #084298;
+}
+
+
+/* ==========================================
+   Links
+========================================== */
+
+a {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media(max-width:992px) {
+    .left-side {
+        display: none !important;
+    }
+    .register-card {
+        width: 90%;
+        padding: 30px;
+    }
+}
