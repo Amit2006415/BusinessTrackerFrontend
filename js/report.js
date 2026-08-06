@@ -54,6 +54,24 @@ function loadReport() {
 }
 
 // ==========================================
+// Logout
+// ==========================================
+
+function logout() {
+
+    if (confirm("Are you sure you want to logout?")) {
+
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("language");
+
+        window.location.href = "index.html";
+
+    }
+
+}
+
+// ==========================================
 // Load Reports
 // ==========================================
 
