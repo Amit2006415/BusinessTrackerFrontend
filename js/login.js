@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
-        fetch("http://localhost:8080/api/login", {
+        fetch("https://business-tracker-backend-d7gt.onrender.com/api/login", {
 
             method: "POST",
 
