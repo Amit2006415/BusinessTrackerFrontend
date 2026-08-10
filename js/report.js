@@ -7,12 +7,18 @@ if (localStorage.getItem("isLoggedIn") !== "true") {
 }
 
 // ==========================================
+// Current Year
+// ==========================================
+
+const currentYear = new Date().getFullYear();
+
+// ==========================================
 // Load Report Data
 // ==========================================
 
-function loadReport() {
+function loadReport(year = currentYear) {
 
-    fetch(API_BASE_URL + "/dashboard")
+    fetch(API_BASE_URL + "/dashboard?year=" + year)
 
     .then(response => {
 
@@ -31,19 +37,19 @@ function loadReport() {
         // ==========================================
 
         document.getElementById("income").innerHTML =
-            "₹ " + data.totalIncome.toFixed(2);
+            "₹ " + Number(data.totalIncome).toFixed(2);
 
         document.getElementById("expense").innerHTML =
-            "₹ " + data.totalExpense.toFixed(2);
+            "₹ " + Number(data.totalExpense).toFixed(2);
 
         document.getElementById("dueAmount").innerHTML =
-            "₹ " + data.totalDueAmount.toFixed(2);
+            "₹ " + Number(data.totalDueAmount).toFixed(2);
 
         document.getElementById("currentProfit").innerHTML =
-            "₹ " + data.currentProfit.toFixed(2);
+            "₹ " + Number(data.currentProfit).toFixed(2);
 
         document.getElementById("profit").innerHTML =
-            "₹ " + data.totalProfit.toFixed(2);
+            "₹ " + Number(data.totalProfit).toFixed(2);
 
         // ==========================================
         // Monthly Income
@@ -59,8 +65,14 @@ function loadReport() {
             Object.entries(data.monthlyIncome).forEach(
                 ([month, amount]) => {
 
+                    const percentage =
+                        getMonthlyPercentage(
+                            amount,
+                            data.monthlyIncome
+                        );
+
                     html += `
-                            <div class="monthly-income-item">
+                            <div class="monthly-income-item mb-3">
 
                                 <div class="d-flex justify-content-between align-items-center mb-1">
 
@@ -79,10 +91,7 @@ function loadReport() {
                                     <div
                                         class="progress-bar"
                                         role="progressbar"
-                                        style="width: ${getMonthlyPercentage(
-                                            amount,
-                                            data.monthlyIncome
-                                        )}%">
+                                        style="width: ${percentage}%;">
                                     </div>
 
                                 </div>
@@ -124,6 +133,48 @@ function getMonthlyPercentage(amount, monthlyIncome) {
 }
 
 // ==========================================
+// Create Year Options
+// ==========================================
+
+function createYearOptions() {
+
+    const yearSelect = document.getElementById("yearSelect");
+
+    if (!yearSelect) {
+        return;
+    }
+
+    yearSelect.innerHTML = "";
+
+    // Previous 2 years
+    for (let year = currentYear - 2; year <= currentYear + 1; year++) {
+
+        const option = document.createElement("option");
+
+        option.value = year;
+        option.textContent = year;
+
+        if (year === currentYear) {
+            option.selected = true;
+        }
+
+        yearSelect.appendChild(option);
+    }
+
+    // ==========================================
+    // Year Change
+    // ==========================================
+
+    yearSelect.addEventListener("change", function() {
+
+        const selectedYear = Number(this.value);
+
+        loadReport(selectedYear);
+
+    });
+}
+
+// ==========================================
 // Logout
 // ==========================================
 
@@ -146,6 +197,8 @@ function logout() {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    loadReport();
+    createYearOptions();
+
+    loadReport(currentYear);
 
 });
