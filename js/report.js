@@ -16,9 +16,15 @@ const currentYear = new Date().getFullYear();
 // Load Report Data
 // ==========================================
 
-function loadReport(year = currentYear) {
+function loadReport(year = null) {
 
-    fetch(API_BASE_URL + "/dashboard?year=" + year)
+    let url = API_BASE_URL + "/dashboard";
+
+    if (year !== null) {
+        url += "?year=" + year;
+    }
+
+    fetch(url)
 
     .then(response => {
 
@@ -50,6 +56,18 @@ function loadReport(year = currentYear) {
 
         document.getElementById("profit").innerHTML =
             "₹ " + Number(data.totalProfit).toFixed(2);
+
+        // ==========================================
+        // Create Dynamic Year Options
+        // ==========================================
+
+        if (data.availableYears) {
+
+            createYearOptions(
+                data.availableYears,
+                year
+            );
+        }
 
         // ==========================================
         // Monthly Income
@@ -133,12 +151,13 @@ function getMonthlyPercentage(amount, monthlyIncome) {
 }
 
 // ==========================================
-// Create Year Options
+// Create Dynamic Year Options
 // ==========================================
 
-function createYearOptions() {
+function createYearOptions(availableYears, selectedYear) {
 
-    const yearSelect = document.getElementById("yearSelect");
+    const yearSelect =
+        document.getElementById("yearSelect");
 
     if (!yearSelect) {
         return;
@@ -146,28 +165,82 @@ function createYearOptions() {
 
     yearSelect.innerHTML = "";
 
-    // Previous 2 years
-    for (let year = currentYear - 2; year <= currentYear + 1; year++) {
+    // ==========================================
+    // No Years Available
+    // ==========================================
+
+    if (!availableYears || availableYears.length === 0) {
 
         const option = document.createElement("option");
+
+        option.value = currentYear;
+        option.textContent = currentYear;
+        option.selected = true;
+
+        yearSelect.appendChild(option);
+
+        return;
+    }
+
+    // ==========================================
+    // Sort Years
+    // Oldest → Newest
+    // ==========================================
+
+    availableYears.sort((a, b) => a - b);
+
+    // ==========================================
+    // Add Years
+    // ==========================================
+
+    availableYears.forEach(year => {
+
+        const option =
+            document.createElement("option");
 
         option.value = year;
         option.textContent = year;
 
-        if (year === currentYear) {
+        if (
+            selectedYear !== null &&
+            Number(selectedYear) === Number(year)
+        ) {
+
             option.selected = true;
         }
 
         yearSelect.appendChild(option);
-    }
+    });
 
     // ==========================================
-    // Year Change
+    // If No Selected Year
+    // Select Latest Available Year
     // ==========================================
+
+    if (selectedYear === null) {
+
+        yearSelect.value =
+            availableYears[availableYears.length - 1];
+    }
+}
+
+// ==========================================
+// Year Change
+// ==========================================
+
+function setupYearChange() {
+
+    const yearSelect =
+        document.getElementById("yearSelect");
+
+    if (!yearSelect) {
+        return;
+    }
 
     yearSelect.addEventListener("change", function() {
 
-        const selectedYear = Number(this.value);
+        const selectedYear =
+            Number(this.value);
 
         loadReport(selectedYear);
 
@@ -187,7 +260,6 @@ function logout() {
         localStorage.removeItem("language");
 
         window.location.href = "index.html";
-
     }
 }
 
@@ -197,8 +269,11 @@ function logout() {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    createYearOptions();
+    // First load without specifying year.
+    // Backend will select the latest available year.
 
-    loadReport(currentYear);
+    loadReport();
+
+    setupYearChange();
 
 });
