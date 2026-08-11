@@ -1,5 +1,5 @@
 /* ==========================================
-   Google Font
+   Global
 ========================================== */
 
 * {
@@ -11,6 +11,7 @@
 
 body {
     background: #f4f7fc;
+    overflow-x: hidden;
 }
 
 
@@ -30,9 +31,22 @@ body {
 
 .sidebar {
     width: 270px;
+    height: 100vh;
     background: #1e6df2;
     color: white;
-    transition: 0.3s;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: 0.3s ease;
+    z-index: 9999;
+}
+
+.sidebar.close {
+    left: -270px;
+}
+
+.sidebar.show {
+    left: 0;
 }
 
 .sidebar .logo {
@@ -81,7 +95,15 @@ body {
 
 .content {
     flex: 1;
+    margin-left: 270px;
+    width: calc(100% - 270px);
     padding: 35px;
+    transition: 0.3s ease;
+}
+
+.content.full {
+    margin-left: 0;
+    width: 100%;
 }
 
 
@@ -98,14 +120,25 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
 }
 
 .topbar h2 {
     font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
 }
 
 #menuBtn {
     font-size: 20px;
+}
+
+
+/* Language */
+
+.topbar .form-select {
+    width: 160px;
+    min-width: 160px;
 }
 
 
@@ -193,6 +226,24 @@ body {
 
 
 /* ==========================================
+   Monthly Income
+========================================== */
+
+.monthly-income-item {
+    text-align: left;
+}
+
+.monthly-income-item .progress {
+    background: #e9ecef;
+    border-radius: 10px;
+}
+
+.monthly-income-item .progress-bar {
+    border-radius: 10px;
+}
+
+
+/* ==========================================
    Toast
 ========================================== */
 
@@ -200,42 +251,157 @@ body {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 9999;
+    z-index: 99999;
 }
 
 
 /* ==========================================
-   Responsive
+   Tablet
 ========================================== */
 
-@media(max-width:992px) {
+@media (max-width: 992px) {
     .sidebar {
-        width: 80px;
+        width: 250px;
+        height: 100vh;
+        left: -250px;
+        top: 0;
+        transition: 0.3s ease;
+    }
+    .sidebar.show {
+        left: 0;
+    }
+    .sidebar.close {
+        left: -250px;
     }
     .sidebar .logo h2 {
-        display: none;
+        display: block;
     }
     .sidebar ul li a span {
-        display: none;
+        display: inline;
     }
     .sidebar ul li a {
-        justify-content: center;
+        justify-content: flex-start;
     }
     .content {
+        width: 100%;
+        margin-left: 0;
         padding: 20px;
     }
+    .content.full {
+        margin-left: 0;
+        width: 100%;
+    }
     .topbar {
-        flex-direction: column;
-        gap: 15px;
+        margin-bottom: 20px;
     }
 }
 
-@media(max-width:768px) {
+
+/* ==========================================
+   Mobile
+========================================== */
+
+@media (max-width: 576px) {
+    .content {
+        width: 100%;
+        margin-left: 0;
+        padding: 12px;
+    }
+    /* Topbar */
+    .topbar {
+        width: 100%;
+        min-height: 68px;
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+    }
+    .topbar>div:first-child {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        flex: 1;
+    }
+    /* Menu Button */
+    #menuBtn {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+        padding: 0;
+        margin-right: 8px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #menuBtn i {
+        font-size: 18px;
+    }
+    /* Title */
+    .topbar h2 {
+        font-size: 20px;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    /* Language */
+    .topbar>div:last-child {
+        flex-shrink: 0;
+    }
+    .topbar .form-select {
+        width: 105px !important;
+        min-width: 105px !important;
+        height: 40px;
+        font-size: 14px;
+        padding: 6px 28px 6px 10px;
+        border-radius: 8px;
+    }
+    /* Cards */
+    .card {
+        border-radius: 12px;
+    }
+    .card-body {
+        padding: 20px;
+    }
     .card-body h2,
     .card-body h3 {
         font-size: 32px;
     }
+}
+
+
+/* ==========================================
+   Small Mobile
+========================================== */
+
+@media (max-width: 380px) {
+    .content {
+        padding: 8px;
+    }
+    .topbar {
+        padding: 9px;
+        gap: 5px;
+    }
+    #menuBtn {
+        width: 36px;
+        min-width: 36px;
+        height: 36px;
+        margin-right: 5px !important;
+    }
+    #menuBtn i {
+        font-size: 17px;
+    }
     .topbar h2 {
-        font-size: 24px;
+        font-size: 18px;
+    }
+    .topbar .form-select {
+        width: 92px !important;
+        min-width: 92px !important;
+        height: 36px;
+        font-size: 13px;
+        padding-left: 8px;
+        padding-right: 22px;
     }
 }
