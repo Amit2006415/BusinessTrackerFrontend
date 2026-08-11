@@ -207,7 +207,7 @@ body {
    Mobile
 ========================================== */
 
-@media(max-width:992px) {
+@media (max-width: 992px) {
     .sidebar {
         left: -250px;
         width: 250px;
@@ -229,5 +229,103 @@ body {
     }
     #languageSelect {
         width: 130px;
+    }
+}
+
+
+/* ==========================================
+   Mobile - Same as Customers / Expenses / Reports
+========================================== */
+
+@media (max-width: 576px) {
+    .content {
+        width: 100%;
+        margin-left: 0;
+        padding: 12px;
+    }
+    .topbar {
+        width: 100%;
+        min-height: 70px;
+        padding: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap;
+    }
+    .topbar>div:first-child {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        flex: 1;
+    }
+    /* Menu Button */
+    #menuBtn {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+        padding: 0;
+        margin-right: 8px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #menuBtn i {
+        font-size: 18px;
+    }
+    /* Dashboard Title */
+    .topbar h2 {
+        font-size: 21px;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    /* Language */
+    .topbar>div:last-child {
+        flex-shrink: 0;
+    }
+    #languageSelect {
+        width: 105px !important;
+        min-width: 105px !important;
+        height: 40px;
+        font-size: 14px;
+        padding: 6px 28px 6px 10px;
+        border-radius: 8px;
+    }
+}
+
+
+/* ==========================================
+   Very Small Mobile
+========================================== */
+
+@media (max-width: 380px) {
+    .content {
+        padding: 8px;
+    }
+    .topbar {
+        padding: 10px;
+        gap: 5px;
+    }
+    #menuBtn {
+        width: 36px;
+        min-width: 36px;
+        height: 36px;
+        margin-right: 5px !important;
+    }
+    #menuBtn i {
+        font-size: 17px;
+    }
+    .topbar h2 {
+        font-size: 18px;
+    }
+    #languageSelect {
+        width: 92px !important;
+        min-width: 92px !important;
+        height: 36px;
+        font-size: 13px;
+        padding-left: 8px;
+        padding-right: 22px;
     }
 }
